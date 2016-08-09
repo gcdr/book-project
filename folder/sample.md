@@ -4,10 +4,8 @@
 * List.
 * List.
 * List.
-
 * List.
 * List.
-
 * List.
 * List.
 
@@ -16,12 +14,10 @@
 * List
 * Book
 * List
-
 * Book
 * List
 * Book
-
-1. List
+* List
 * Book
 * List
 * Book
@@ -33,13 +29,9 @@
 > This
 
 > and
-
 > That
-
 > This
-
 > and
-
 > That
 
 > This
