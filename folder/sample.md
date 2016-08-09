@@ -27,21 +27,16 @@
 #### Next Title
 
 > This
+ and
+ That
+ This
+ and
+ That
 
+> This
 > and
 > That
 > This
-> and
-> That
-
-> This
-
-> and
-
-> That
-
-> This
-
 > and
 > That
 > This
