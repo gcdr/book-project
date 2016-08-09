@@ -11,34 +11,12 @@
 
 #### Next Title
 
-* List
-* Book
-* List
-* Book
-* List
-* Book
-* List
-* Book
-* List
-* Book
-* List
-* Book
+* Just write it, like this!
 
-#### Next Title
+    rm *.tex  
+    rm *.c
 
-> This
- and
- That
- This
- and
- That
+    rm *.c++
 
-> This
-> and
-> That
-> This
-> and
-> That
-> This
-> and
-> That
+    rm -v *.cpp  
+    rm *.hpp
