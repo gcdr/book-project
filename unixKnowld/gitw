@@ -1,0 +1,13 @@
+#!/usr/bin/env sh
+# Glen Ritchie (c) 2015--2017 Copyright
+if [ ! -f "$1" ]; then
+  echo -e "File not present, here."
+elif [ $# -eq 1 ]; then
+  echo -e "Short on Parms"
+elif [ $# -eq 0 ]; then
+  echo -e "Combine git add '$1' && git commit -m '$2' script"
+elif [ $# -eq 2 ]; then
+  git add "$1" && git commit -m "$2"
+else
+  echo -e "Over Two Parms"
+fi
