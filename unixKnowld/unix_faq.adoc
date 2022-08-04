@@ -1,340 +1,3613 @@
 
+== Root:
+
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+// ------------------------------------------------------------------
+
+== Unix Listings:
+
+
+1) I guess I am using "vim".
+
+2) less will show *.gz files; expanded text.
+    less -N afile.txt # Show line numbers, while less-ing.
+
+3) /usr/doc is important for browsing.
+
+4) Useful grep -i -l -W ... *.h
+
+5) to transfer files from cb03 to host system.
+
+  scp gritchie@cb03.cc.ndsu.nodak.edu:~/* ./tmp/this_directory
+
+No wonder you couldn't figure that out - without some help.
+
+6) Brandon's magic search & replace; in vi.
+  %s/this/that/g
+  s///[cgi]: the c is for change prompting, i is for insensitive.
+
+7) The power find: find ./ -name stuff* -print &
+
+8) chmod 755; for common shells.
+	chmod u+rw afile.txt # works, too.
+	chown root.wheel afile.txt # BSD style & Linux, too.
+	chmod a+rwx afile.txt
+	chmod g+rw afile.txt
+	chmod ug+rw afile.txt
+	o is for other.
+	chmod ugo+rwx afile.txt # same as a+rwx
+	chmod -c, chmod -reference=afile.txt, chmod ugo-tXxs,sll,sdlsl,sdfsl,s (extras)
+
+9) way to make nice program listings.
+  a2ps --medium=Letter --line-numbers=1 -o fam.ps fam.txt
+  a2ps -2 -C -T 4 -A fill --medium=Letter -o fileout.ps file1.txt file2.txt file3.txt file4.txt
+  a2ps (-1) prg.h -oprg.ps
+  ps2pdf prg.ps
+
+  a2ps -K -4 -odata.ps data.txt
+  a2ps -1 --landscape --chars-per-line=120 # USE THIS.
+  a2ps --landscape -1 --chars-per-line=120 # is NOT the SAME as previous invocation!
+  a2ps -r -1 ... # the same as above. (-R portrait)
+
+  a2ps -2 -C -T 4 -R --rows=2 --columns=1 --chars-per-line=100 code32g.py # top/bottom, no line wrapper form.
+  
+	a2ps -1 -R -A fill -o junk21.ps ttt02.err ttt03.err
+	g++ -Wall typ02.cpp >ttt02.err 2>&1 # for capturing those hard to get streams!
+	a2ps -2 -R --rows=2 --columns=1 --chars-per-line=100 -A fill -o junk21.ps ttt02.err ttt03.err
+	a2ps -2 -R --rows=2 --columns=1 --chars-per-line=80 -A fill -o junk21.ps ttt02.err ttt03.err
+	# Turn of delegate
+	a2ps --delegate no ... # Sometimes, *.html file will cause delegate & trouble.
+	a2ps --delegate=0 # works, too. (HTML tries to render page, issue when just want HTML codes.)
+
+    # Coder form.
+    a2ps --landscape -K -T 4 -C --chars-per-line=91 -A fill -o xap.ps README *.txt *.c *.sh *.scm
+    # Alt 2
+    a2ps -K -T 4 -C --portrait -1 --chars-per-line=90 -A fill -o xap2.ps m*.scm rmain.scm
+
+10) way to copy con; like DOS.
+  cat > junk.file  (^D)
+
+11) cp -i p01.cpp p01_a.cpp
+  blocking overwrite
+    rm -i whatever.file
+
+12) !100
+
+13) useful shell scripts
+  lss, lst, lsd, lsc, hist, gr1, gr2
+
+14) find . -name what*.txt -print
+  find ~ -name '*.foo' -print
+  find . -name 'patt' -exec grep patt '{}' /dev/null \;
+	ls $@ 2>/dev/null; exit 0. (doesn't return exit status value, always 0.)
+	ls -d ???{?,} # does 3 and 4 letter named files. (ls -d ??? ???? #works too.)
+	sed has \< \> for word markers.
+	while [ -z "ERROR" ] && [ $# != 0 ]; do ...     done
+	cd # by itself, changes to cd ~.
+	cd //; is the root dir. (cd /, the same).
+	(vi related) 3dw, Crtl-Z, z<>, z., z-, set number.
+	(grep) [^not_present]
+	(bash) [~not_present] , comma for OR.
+	echo, cat; are 2 of Unix most simple filters.
+	PS1, PS2; primary and secondary prompts.
+	script command; useful to run subshell's, in the existing shell. (by default is not done, as such.)
+	egrep; is a little smarter than grep. For instance, it has the word-marker grammar.
+	vi -T vt100 afile.inNoColor
+
+15) tail -f /var/log/apache/sue...SU....
+
+16) to capture your STDERR, to a file.
+	command 2> thefile.log
+	command 2>/dev/null
+
+17) job control.
+	a) You cannot logout - stranded jobs & expect to re-attach to them, later.
+	jobs: shows what you have pending.
+	fg 1: will bring job 1, into you shell.
+
+18) sort +0 -b -g (g for numbers).
+	sort -u # unique, remove dups.
+	sort -r # reverse.
+	sort -o output.txt input.txt
+	sort names | uniq -d # show just dups. (Have to sort, for uniq to work.)
+	sort names | uniq -c # show counts, with normal output.
+	egrep -v '^@' hiss_2_0013.gram | uniq | less
+
+19) card sort [--command="cc -flags"] -Pdisplay -ocardit.ps
+
+20) c2ps -2 -p Letter aprg.cpp >aprg.ps
+    ps2pdf -sPAPERSIZE=letter aprg.ps
+	ps2ascii input.ps >output.txt
+
+	c2ps -t 4 -1 -p Letter aprg.cpp >aprg.ps
+	pstops "2:0L@.7(21cm,0)+1L@.7(21cm,13.2cm)" input.ps >output.ps
+
+21) c2ps -d 0 -C Palatino-Italic 
+
+22) c2ps -p Letter infile.c > outfile.ps
+	bcpp -cc 10 -bcl -s infile.c outfile.c2
+
+23) touch -d 01/15/2001 afile.name
+	touch -t 2001 01 15 1735. 47 afile.name # this has ADDED spaces...
+	touch -t 01151830 afilename # normal plain mandatory format.
+		200101151735.47
+	date -s'2002/04/07 01:30:0'	
+
+24) global replace for vi.
+	:%s/
+		\.\/
+		/
+		grep -i -l list \.\/
+	/g
+
+OR start with %s///g - then fill in the pieces.
+
+25) DOING //! hidden comments removal. Use vim.
+%s///g
+	\/\/!.*     the other leave blank
+
+26) fmt -30 input.file > output.file
+	formatter - re-forms to 30 char long word-wrapped lines.
+
+27) astyle --indent=tab=2 --style=gnu -S -C input.file > out.file
+
+28) Goliath latex symbols:
+	/usr/share/texmf/tex/latex/amsfonts
+	/usr/share/texmf/tex/latex/base/book.sty
+	/usr/lib/latex2html/icons.gif (icons for it).
+
+	FreeBSD: /usr/local/share/texmf/tex
+
+28B) The plain command from NDSU
+    latex2html -no_subdir -info "" -bottom_navigation -t "Astronomy Speech" tz_06.latex
+
+29) vi macro (vi commands)
+	and vi abbreviations
+:map swap xph
+:umap swap // to clear it
+
+:map hot itypeit<CTRL-v><hit ESC key>
+
+:ab sym1 $\blacktriangle$
+:unu sym1
+
+	vi -s abs03.txt inputFile.txt
+
+30)
+  egrep '' ``
+  egrep 'keyword' `find . -type f -print`
+
+  (xarg form) find . -type f -print | xargs 'keyword' /dev/null
+
+  (one file lister) 
+  grep "whatever" /dev/null ./*.cpp
+
+  egrep -i "'[a-zA-Z0-9]*'" ui_83.txt # egrep with ' apos in string, must use " quotes.
+
+31) complex compile & linking.
+	g++ -o thread3 -lpthread a_thread_program.cpp
+	(-lg++ used for some??? c++ programs)
+	
+	g++ -Wall typ02.cpp >ttt02.err 2>&1 # for capturing those hard to get streams!
+
+32) (if allowed) lpr -Plw150b-1 -#3 threecopy.ps
+
+33) vi macro library:
+  map ho
+	0i\section}^[
+	A}^[
+	oDescribe:^[
+	o//^[
+	o^[j
+  # creates 3 line expansion. would be nice to find a easier text to leave
+insert mode.
+
+  map hu
+	^[
+
+  map ho: # Standard Dup Line (with ls).
+    yypkAy<Esc>:.,j<Enter>j
+
+34) a2ps --list=defaults.
+	a2ps --medium=Letter -o fam.ps fam.txt
+
+35) as root: /sbin/hdparm -Tt /dev/hda1
+
+36) netstat -a
+	netstat -n | head -20 # Interesting.
+    netstat -a -b # Revealing on Windows; runs a while though.
+
+37) dict anonymity
+
+38) /sbin/init.d/rc2.d
+	versus inetd.conf
+
+39) write nichols<>
+	a line
+	a line<Ctrl-D>
+
+	wall<>
+	a line
+	a line<Crtl-D>
+
+40) cmp, diff, sdiff
+
+41) ignorecase searching in vim.
+	:set ic
+	:set noic (to reset)
+	/time_t (can be used).
+
+42) grep -i -l -d recurse keyword *.h
+	grep -A 10 -B 2 ^class *.h | less # Useful for seeing lines before and after.
+	A CASE OF CONTRASTING REGULAR LOGIC:
+	find . -name '*.c*' -print | grep -v '\.c[~p]' | grep -v '\.c$' | less
+		* show all *.c* files
+		* remove .cpp
+		* remove .c[END OF LINE marker].
+
+	du -ach . | grep ^.[\.].M # find 100M and up.
+	du -ach . | grep ^.[\.]M # find 10M and up.
+
+43) vi search,prompt,replace
+  0,$s///gc
+	0,$///g # Just do-it!
+
+44) /usr/sbin/tcpdump port 10000
+	as root
+
+45) Unusual personal files:
+	.signature, .plan, .profile
+
+46) bwyman option works in top.
+	* a ssh_get, ssh_add; can auto work with rlogin - similar functionality.
+	* ~ in vi - switch case.
+	* syntax=on, xterm:color
+
+47) The troubling sticky bit.
+	chmod 745, g+x, g+s
+	# For linux, proper way to set sticky bit on /tmp dir.
+	chmod +t tmp # in / (root).
+	# Meaning on directories, is about any user's usage of text files.
+	# Versus, on files, about keeping the executable image in memory, for faster loading.
+
+48) The command line calculator:
+	bc -l
+	to leave: quit
+
+49) mount -t msdos /dev/hda5 /dos16
+	mkdir /dos16 (from /).
+
+50) the magical - join line command in vi!!!
+	-,.j<>   $bhx  (or .,+j<>)
+
+51) I don't know the exact requirements on the server - roboto.
+	But, on the client - before you log onto roboto, you have to do a xhost +134.129.61.163.
+	Also, using xhost - seems to be - only active during running X session. Also, X needs to be running to connect to the Xserver. (that is simple enough).
+
+52) man printcap | col -b
+	man -t ls | lpr -Pmutt@lw150b-1 # Makes a very nice and fancy man page printout.
+	cat ppp_command.4 | nroff -man | less # Note, cannot be gzip form.
+	cat -v . | strings | less # show dir, crude on BSD only (Linux SysV).
+
+53) pstree -ap 
+    pstree -Gap | more # less bad. (For funky Unix systems.)
+	strace -p PID (ie. 1533).
+
+54) ln -s ~/vent/tex3 linktex3
+	ln -sf realFile theLINK!!!
+
+55) C++ formatting programs.
+	indent
+	c++2latex (tex)
+	tgrind (tex)
+
+56) Secret to vim named buffers, use the " before the letter name for the buffer.
+	Such as "ayy, puts a yanked line into buffer a.
+
+57) The elusive - fix the dumb linefeeds from MS-DOS files. (dos2unix didn't work.)
+	tr -cd '\11\12\40-\176' <main.latex >main2.latex
+	perl -pe -i.lfcr "s/[\012\015]//;" file # For DOS to Unix.
+	perl -pe -i.lf "s/[\012]//;" file # For Unix to DOS.
+
+	# I had to use it WITHOUT the -i option and, > afile.output.
+
+	# An alternative? with col cmd.
+	col -bx < infile > outfile
+
+	# vim command all uppercase letters, to lowercase.
+	:%s/[A-Z]/\L&/g
+	:%s[a-z]/\U&/g # The other way.
+
+58) fmt -w 75 input.txt >output.txt :to format a paper for typical typing lines.
+    par # Another useful paragraph formatting program.
+
+59) cut --b=31-47 afile >afile.ver2 :to cut only wanted char-columns from a file into another. (paste can be used, too. later).
+	ls -l | cut --b=55-100 > fil1.sh
+	ls | paste #But then includes DIRS - whatever.
+Clever way to delete all but specified wildcard files.
+	ls | paste - | grep -v \.ps | xargs rm /dev/null
+	cut --b=30- afile # The - hyphen here indicates to EOL end of line.
+	ls -latr --color=never --full-time
+
+60) card cut --command="cc -flags" "-2 --medium=Letter" -ocut_card.ps
+	Not a perfect solution - to formatting a reference card to Letter sized paper, but the fault is in card - since it calls a2ps automagically - when it sees a single dash '-' unknown parm - unfortunately they forgot about -- doubles. And thus, if card calls a2ps; you can't help it being this way.
+	a) Unless, you rebuild a2ps for its own default of Letter. (Or perhaps a configuration files - could do that without re-building the thing.)
+	b) Also, if you can find how to grab its - goes to lpr (or lp) command without having it auto-dump it to a printer - then perhaps I can personally handle it better.
+
+61) category commands:
+	xpdf, acroread
+	gdb, kdb, ddd, (vdb), (kdbt), xxgdb (what?)
+	gv, ghostview (a viewer), gs (is gs_x11) (prg to convert ps to non-ps).
+	gimp
+	vi, elvis, vim, gvim
+		emacs, aedit, mcedit (also mc), bedit, gedit, pico (Sarah's), jed, jove 
+
+	vi, vim: is best for works everywhere. (Can run even on a floppy only system.)
+	emacs: is best for has high-end programmability (EmacsLisp) but takes lots of power.
+
+	pine, elm, mutt, 'sendmail, 'mail, 'write,
+	cal, gcal, pcal
+    ical, evolution, plan, korganizer, xcal, gdeskcal, gnome-pim?, xf (XF?)calendar, konsolekalendar
+    -- mozilla (view calendar).
+    # Cosmo Clients: 
+    chandler, evolution, sunbird, lightning?
+
+	awk, gawk, perl, sed,
+	grep, egrep, fgrep, --- agrep, ngrep, zgrep, zipgrep, pgrep, rgrep
+	sgrep (structured grep)
+	mswordview (v8/97), word2x (v6), ispell
+	diff, sdiff (screen), wdiff (words), zdiff (compressed), pdiff (pretty.), cmp
+		xwdiff (X-based).
+	tr, recode
+	scp, rsync (not secure), rcp (insecure)
+	cut, paste, split, tee, tail, head, 
+    fmt, par
+	/dev/null, 2>,
+	astyle, bcpp, c2ps
+
+	a2ps, html2ps, ps2pdf, latex2html, enscript ALSO: mf, mft, mpost, weave (METAFONT, MPOST), tangle, web2c, pc, pxp (pascal coding). makempx (part of mpost).
+	xdos, x128, x64, z81
+	zip, unzip, unrar, shar, unshar
+	tar .tar, .tarZ, lharc?, gzip?
+	xscheme, gforth, xlisp, zoo
+	tcsh, bash, csh, sh, zsh, ypsh, ???
+	m4: Macro Processor (shell script inside a shell).
+
+	gimp, imageMagik, xv (xView)
+	gnumeric, (AND) sc [textual spreadsheet calculator, looks like DOS 1-2-3ish.], psc is a utility for it.
+	sort, tsort
+
+	grok # A cardfile paradigm form database handling of fielded strings, Unix Program.
+
+	sq (squeeze), look (lines starting), join.
+	elisp: LISP in Xemacs.
+
+	Office Suites: siag (usu. w/ kde), koffice, star office, abi-word, 602 Office (win only?).
+	dmesg: show boot messages
+
+	gperf: generate perfect hash tables?
+	ptx: make permuted index(es). (gptx) info ptx.
+
+	xearth, xmars, xsnow, xmoon, XEphem, xplanet !
+	we: Windows X Environment. # Interesting file manager?
+    gnuchess, glchess (X-based).
+    Browsers: mozilla, firefox, netscape, lynx, w3m, opera, jakarta?
+
+62) ls | paste - - -  // show in 3 columns.
+	paste -d"\n" file1.txt file2.txt     // the cross-merge 2 files solution.
+	ls | paste -d" " -
+	paste -s -d"\t\n" file   // combine pairs of lines from a file, into 1 line
+
+	ls | columns #shows as up-down columned.
+	pushd ., popd, dirs, dirs -v, more -l ????, cd - (works too).
+	cd - # is a ROTATE among the dirs version!
+
+	paste -s - # tab assumed by default, in 'cut ', too.
+	paste -d' ' -s -
+
+63) hexdump -x afile.txt (shows hexadecimal values)
+		od is obsolete. hexdump -xc shows characters - however, the chars are not aligned with the numberings. Should find a better thing - in the future.
+		hexdump -cb file # nice format.
+
+64) strings (-a) /etc | grep /
+		takes any file - and only shows ascii chars, also recurse dir.s automatically.
+	strings .netscape/history.dat	// rather revealing.
+
+65) some very hard programming lore:
+	no more ltoa, utoa.
+	gcvt, ecvt, strtol, strtou, outdated-atoi, or atol, or atof...
+So, what about a long int to a string. You aren't going to believe this. Presumably - you just simply use sprintf(). ! Which - if that is so - in C++ means use a ostrstream and copy out its buffer.
+
+66) primes 1 200 | paste - - - -
+
+67) dict -m (match) xat  // shows a lot of possible - sound-alike words.
+
+68) About text editors: vi is the best for running everywhere and is lite. Can actually run from a system - off of floppies.
+	However, the hard core - got to program my text editor programmer, uses       emacs. Emacs is also uses for defining editing standards for working with any specialized files types - one can make up.
+
+70) Magic dummy IP address.
+	192.168.0.99 (localhost ???)
+	192.168.10.0 (local Ethernet network)
+	127.0.0.0 (loopback network) [SuSE loopback] 127.0.0.1 the real localhost.
+
+71) languages:
+	ghc: Glasgow Haskel compiler
+	flagship: xBase compiler (full-version commercial?) (Not OSS!)
+	fpk: free Pascal compiler
+	gforth: Forth
+	tools for C++: doxygen, nana (documenting, logging)
+	perl
+	python ?
+	sed, awk, gawk
+
+72) txt2html -tf --mail -H '^ *--[\w\s]+-- *$' -a samp.foot samp.txt > samp.html
+
+
+73)	A hard way - to find all 3 letter filename files - in a DIR. 2nd is best way.
+     ls -l | cut --b=56-90 | grep ^...$ | paste - - - - - - 
+     ls | grep ^...$ | paste - - - - - -
+	 ls -d /usr/bin/???
+
+74) A weird remote Xwindow app.
+		gmc // caution: no way to turn off. Believe is gnome.
+
+75) Getting the filespace - used by files mentioned by wildcard (in same DIR for now).
+	du -ac rfc1*
+	du -ach `find . -type f -print`
+	du -ach `find . -name '*.pdf' -print`
+	find . -maxdepth 1 -print # just files in current directory.
+	ls -l `find . \! -type f -maxdepth 0 -print` | sort +4 -n
+	find . \( -name '*.latex' -or -name '*.tak' \) -print # find either names.
+
+76) Various zip formats:
+	gunzip GCC.gz
+	tar xvfz aTarFile.tarZ
+	bunzip ???
+	gzip -d aTar.tar.gz
+	zip -e theFile.txt move1 (.zip) # Only top level folder.
+	zip -r -e theFile.txt move1 (.zip) # Just like tar. Recurs to lower folders.
+
+77) gv -scale -1 afile.ps
+
+78) File DIR specifying:
+	With commands that are tree sensitive? - There is a difference between 
+	'*' vs '*.*' in wildcarding.
+
+79) WinNT problems with scp.
+	scp -p -r theglen@pythag:~/here/there/everywhere/* .\
+To find bad-formed names.
+	ls -lR >~/junk20.file  # find . -name '*\:' -print ## limitation only finds single bad-formed ESC character.
+	vi junk20.file # /\\ look for the ESC.
+
+	ls -lR /opta/theglen4/StarStuff/ | cut --b=55-100 | uniq -u >~/junk20.file
+	!!! characters like: \? and \* cause special problems.
+
+80) xroach -rc green -speed 0.5 -squish -roaches 30	
+	setterm -foreground green # only console. # found under Linux- keyboard-console HOW-TO
+	xnetload -if eth0 -ni -nv -u 2
+	xless afile.name
+	xman # allows seeing how many man pages & grouped in a certain way. categorically.
+	ytree # like DOS Norton Desktop - whatever.
+
+	ALSO: wget # common utility to do it!
+	PLUS: I found numerous perl-scripts that were hacked to do it & a grepz.pl.
+
+	wget -nc ftp://www.cran.mirrors.pair.com/bin/windows/contrib/r-release/*.zip
+	wget -drc ftp://admin:passwd@www.glensite1.com
+	wget -drc ftp://admin:asample@www.glensite1.com/wwwroot
+
+    curl -O http://borkware.com/quickies/files/fullscreensaver.tar.gz
+	wget -drc http://www.sampledans.com/ # Grabs whole site - if reading directories is open?
+    # Using www.xxx.com/here/there/ - I believe just drops to home page, anyhow.
+
+81)
+	ftp ftp.whever
+	anonymous
+	iamhere@ndsu.nodak.edu
+
+	binary
+	cd pub; tex-archive; fonts; cm; mf
+	prompt
+	lcd tmp1 # for switching dirs on cb01.
+	mget *
+	reget afile_that_wasnt_complete.file # presuming original server allows.
+
+    mget -R ./*
+
+82) 0ddPP<esc>A_<esc)
+		:.,+j<ent>0j	
+
+83) file finding:
+	find . -printf "%b " -print | grep ^0.* >~/junk20.file 
+	find . \! -type d -print
+	# Incremental Backups. ----------------------------
+	find / -mtime -1 \! -type d -print > /tmp/filelist.daily
+	find / -mtime -7 -print > /tmp/filelist.weekly
+	find /tmp \! -type d -atime +3 -exec ls -l {} \;
+	# the "-exec ls -l {} \;", the \; tells where the exec option is finished.
+	NO GOOD? find . -type f | xargs cat {} \; >/dev/null
+
+83B) # Applying find-exec to a whole directory set of all files.
+    find . -name "*.h" -exec grep NSDoWhatIMean {} \; -print
+    find . -name "*.h" -exec grep -i 'super genius' {} \; -print
+    # The \; is important!
+
+84) gcal 06/2001,07/2001,08/2001
+	sed "s/ /\&nbsp;/g" junk20.html >junk21.html
+	cal -y # show year.
+	gcal 2003 # show year.
+
+	# Correction for Debian gcal
+	gcal --type=standard # So, normal to me. Not Deutsch.
+
+    gcal 2 2003 # Feb. 2003
+    gcal -j 2 2004 # Show day numbers
+    gcal -K 2 2005 # Show week numbers
+    gcal -q US_ND 3 2004 # Holidays in bold, for NDak.
+    
+    # Advanced pcal: PostScript calendar.
+    pcal 10 2004 8 -o cal_Mar30.ps -m -f cal_Mar30
+    gv -scale 0 -landscape cal_Mar30.ps
+
+    # 1
+    pcal 01 2005 4 -o cal_Jan31.ps -K -m -J -f cal_Jan31
+    # 2
+    pcal 01 2005 4 -o cal_Jan31.ps -n Times-Roman/12 -K -m -j -f cal_Jan31
+    # 3
+    pcal 01 2005 12 -o cal_Jan31.ps -n Helvetica/12 -t Times-Roman-Italic/36 -K -m -j -f cal_Jan31
+
+85) doing info tutorial:
+	h (HOME)
+	b (beginning), e (end), SPACE (next), BkDel (prev), OR p & n,
+	m (menu) -- notice colon mode :Foo*
+	f (forward) :Link*
+	d (directory) (ROOT on start), l (last),
+	u (up NODE-Mode, from MENU or FORWARD),
+	f C? -- to show completions.
+	d mInfo -- go to start.
+
+86) find . \( -name 'public_html' -mtime 6 \) -print 2>~/junk20.file
+	ls -ld `find . -type d -print`  # show details on DIRs.
+	# Only problem - don't know how to apply find on Non-DIRs.
+
+87) Due to finding the GIF baloney!
+	/etc/rc.d/rc2.d/K20apache stop # as root; to stop webserver.
+
+88) Checking Latex steps.
+	a1) That math symbols & LaTeX dir.s --- have '\ ' control-space, after them.
+	a2) centerline{\Large} dir. --- for some reason needing blank-line, with '\\<nl>\ ', in order to fake-out a linefeed.
+
+89) Little secret about root. When you need export (or setenv?) variables to come into effect. Start as normal. Put changes into ~/.bashrc. Then run (another) "bash" command. This shell will have those settings.
+	rm `find . -print` (notice grave character), nice way to delete files and not directories.
+
+	rpm -U --force --nodeps pro64-0.01-13.ia64.rpm # As root, do this to over-install something. DANGEROUS command, be advised.
+	ps w, ps -A w, ps -A grep 111 # weird detailed output.
+
+	RPM OPTIONS.
+	rpm -i afile.rpm # normal usage.
+	rpm -F afile.rpm # Freshen usage - what I used to update SuSE packages.
+	rpm --nodeps KAI_trouble.rpm # What I used, to get KAI installed, in spite of how improperly configured.
+	rpm -q afile # to query for a package
+	rpm -U afile.rpm # (NOT USING - personal.) manuals say to upgrade.
+	rpm -i --force afile.rpm # (a manual) says to re-install a present package, without removing and do it.
+
+	JUNE 2002 - SuSE directed rpm (fix grade) Apache.
+	rpm --nodeps -Fvh apache*.rpm mod_ssl*.rpm
+
+90) md5sum filename, md5 filename. (Use MD5SUM!) (both do exist).
+
+91) for x in *; do mv $x `echo $x | tr [A-Z] [a-z]`;
+	a script to rename all files to LOWER-CASE form. (lower case)
+
+	rpm -qa | grep "part_of_package_name" # to find if you have a rpm installed.
+	du -b | sort +0n -r > foo-du.txt | tail # find bigfiles. (mixed results)
+
+	du -a . | sort -rn | head -20 # 20 largest, all dirs.
+	du -a `find . -type f -maxdepth 1 -print` | sort -rn | head -20 # 20 largest, 1 dir. CMD: lsBig, other lsBig any.
+
+	apropos subject # When you know what you want, by not the command.
+	apropos vt100 
+
+	!string # re-do with that string, specific.
+	!?string # re-do with any match of string.
+
+	# how to do a concordance. and | tail # to end, for biggest results.
+	cat run2.txt | tr -sc A-Za-z '\012' | sort | uniq -c | sort -n > concord.txt
+	# also for all current files, start with 'cat $*'.
+
+92) Finding hidden files.
+	ls -adR | paste - | grep ^\. 
+Finding backup files.
+	*.*#, *.*~, *~, *.bak, *.bk1
+Regex - empty line.
+	^$
+
+93) New way to do push . & popd
+	Use '+' and '-'.
+
+94) How to see the bootup screen. dmesg. (Also /var/log/boot.msg file; although not everything like dmesg.)	
+
+95) Classic way to install Linux Apps.
+	a) ./configure --prefix=/usr/special/dir/of/your/choosing
+	b) make
+	c) make test                make ????
+	d) make install
+	e) make clean (to clean or clean for re-building).
+
+96) A magic string for NDSU's phonebook.
+	http://www.ndsu.nodak.edu/phonebook/pbclient.cgi?FNAME=jo&LNAME=mu
+
+97) A fancy ls command, shortcut invade
+	ls -ltrd `find . -maxdepth 1 -perm +040 -print 2>/dev/null`
+
+98) gcc is actually a C++ compiler, too.
+	static libraries (used with linking) (.a .sa?) are included into exe file.
+	dynamic shared libraries (like DLLs) .so, are not linked into. But, are callable by everyone on system and ...
+****
+	gcc -c square.c factorial.c
+	ar r libstuff.a square.o factorial.o	# create library. If already exists, delete
+			# it first.
+	ranlib libstuff.a	# puts in index
+    # Example 2:
+    gcc -Wall -o aprg1 aprg1.c
+
+	# need a libstuff.h file
+	gcc -I../include -L../lib -o wibble wibble.c -lstuff 
+			# (means link against 'lib'stuff.a)
+****
+	# create a shared library
+	cc -o libshared.so import.o getuid.o -shared
+	# to link
+	gcc main.o -o getuid -L. -lshared -lstdc++
+
+	DUP:	gcc -idirafter /opt/local/include/python2.1 -c environ.c
+			cc -o environ.so environ.o -shared
+****
+	ldd getuid
+		# show libraries containing it.
+****
+	gcc -static (vs -shared?) # guides gcc to choosing which lib, if both exist.
+****
+	# Gay book on Unix Prging - static library listing of commands.
+	ar -r libpasswd.a import.o getuid.o
+	ar -r ... (the same) # -r form preferred, today. (the same, just diff. syntax)
+	ar -r libpasswd.a getuid.o 	# UPDATE getuid object module, in libpasswd library.
+
+	ar -t libpasswd.a		# list contents
+	ar -tv ...				# verbose listing (more detailed).
+****
+
+nm -Ap ./libresolv.so | egrep 'inet_aton|res_query|dn_expand'
+	command to list symbols from object files.
+
+99) split --b=1m big.tarZ 	# Linux
+	find . -print | grep -i '\.pdf' | wc -l   # case-less way to find any files.
+	cat x* >rebuild.file # return file, as so.
+
+	(FREE BSD) split -b 20m big.tarZ
+	split -b 70m -a 4 reallyBig.tarZ # Linux: --suffix-length=4
+
+100) tar tvz afile.tarZ # just list file contents.
+
+	echo These people are on: \( `w | egrep -v '(users|USER)' | cut --b=0-8 | paste - - - ` \), your system.
+	# an advanced script, showing usage of back-quote evaluation and echo WHO is on system.
+
+	Inside vim; "! ispell -t %"
+    # Added .vimrc setting, just hit "Caps V."
+
+Advanced grepping.
+	grep -i print cox04c.py | egrep -v '\..$'
+		grep usually replaces egrep. It is just "for more" complicated expressions, egrep is necessary.
+
+101) ls -xa | less # shows wide listing.
+	make troubling.project 2>&1 show_type.txt # capture both stdout and stderr.
+
+102) using su.
+	su root -c 'grep commands ...' # to not be root for everything.
+
+103) root, making a detailed file listing (before zapping, them).
+		1) A plain find command.
+		2) A -type f find command.
+		2b) Search all cat-files, for ".
+
+		2c) vi, :%s/^/"/g and :%s/$/"/g . And change the $ to \$.
+		2d) Also, spaces; need to be escaped - even inside a pair of quotes. :%s/ /\\ /gc.
+	Nevermind, 2c and 2d...
+
+		3) use cat | xargs to; ls -l
+
+104) How to pull out?
+	plain files: find -type f
+	executables: -perm +100 (or +111) [Note: sometimes exe's marked files are such files. Stuff from outside myself.]
+	dirs only: one level, ls -l | grep ^dr
+	dirs all: find . -print >junk20.file; cat junk20.file | xargs ls -l /dev/null >junk21.file; grep ^dr junk21.file
+		PBM: Only shows dir names, raw and flat, no /home/here/that/this/that formed.
+	dirs all: -type d.	
+
+105) Normal. co -l afile.txt; ci afile.txt
+	rlog afile.txt # to see history revision list. Or view RCS file directly.
+	co -u -r1.2 afile.txt # For grabbing old revisions, IMPORTANT use "unlock" option.
+
+	# To effect "user owning" problems.
+	ci -wroot afile.txt
+	co -l -wroot afile.txt
+	# Otherwise, manully edit the ./RCS file.
+
+	# Plus, "set user=root" or "export user=glenrt4" for environment var., manually.
+
+106) DIRECTORY LOGIC:
+	Read very carefully, this is extremely arcane and sadistic Unix Lore.
+
+	a) How 'exactly' do the permission bits on a DIR effect, reading, writing and viewing files; within it?
+	b) tar cvf works great; with non-hidden files (the NON .thing guys). Once, you need to consider the hidden files. It gets very complicated. Even find, can fail on finding .hidden files.
+	c) DO NOT do 'tar ... '.*'' # SINCE it explodes, the archiving. (I believe when it finds any links. It follows them into any dir.s! [UPWARDS], same and very dangerous with "rm" !!! )
+	
+Point 1: find . -name '.*' -print # works great. Only one secret. It DOES NOT traverse into a .hidden_DIR!
+
+Point 2: If an owned dir, is marked non-write by user and other perms. It is a read-only dir; which even for the user. You CANNOT write a file, OR DELETE the files within that DIR. Due to the -w setting.
+
+Point 3: Setting of +x and -x, for non-owners (be it by group or World-permissions); has the effect of toggling "possible reading," and nothing to do with listing.
+	So, if a dir is +x to you, but all others are -SET. If you know the name of a file or DIR; you can VIEW it. (In the case of a sub-DIR, you can actually list it.)
+
+Point 4: If you stupidly +rwx, your dir to everyone. Then, they can write in it. Which if they are smart, they could put a file; inside your ~root-dir's. Which is set such that YOU cannot delete it (-w!). And really aggravate the owner.	
+	
+Point 5: What if you +w only a dir? I don't know. Haven't seen it yet. I'll probably play with it on pythagoras, sometime. I'd presume, you couldn't list it (being an outside user, [the circle]). However, you'd have full permission to create a file.
+
+Point 6: With xargs rm /dev/null. You can delete your /dev/null bit bucket. No fun.
+
+Point 7: It is easy to create looped (circular) directory references.
+	tar cvf whatever.tar * # Does not go into them. Scp does.
+
+107) set noclobber
+	( cc simple.c >compile.out) >&compile.err # does something special.
+	# avoid unintentional over-writting.
+	2>&1 is called "duplicating file descriptors."
+	
+-------------------------
+
+Using gdb:
+  g++ -g -o myprog prg.cpp
+  g++ -c prg.cpp
+  g++ -c -Wall prg.cpp // does lint checking & reports
+
+  gdb myprog
+
+  break main
+
+  run var1.x var2.y
+
+  step (like F7)
+  next (must use on cout lines.)
+
+  cont(inue)
+  quit
+
+  list
+  print
+
+Pbms:
+  1) prgs that "read cin" while running gdb.
+
+------------------------
+
+  Made cover sheet, with Star Office.
+(1): cover sheet
+  363  a2ps -T 4 -1 -o junk20.ps --medium=Letter notes.txt 
+
+
+(2): program listings (with line numbering, inc. of 5)
+  432  a2ps -T 4 -C -2 -o junk21b.ps --medium=Letter try75.py try77.py try76.py que06c.py
+  429  a2ps -T 4 -C -A fill -2 -o junk21b.ps --medium=Letter try75.py try77.py try76.py que06c.py
+		# 429 NOT USED !!!
+
+
+(3): run 1, input and output file.
+  419  a2ps -T 4 -A fill -4 -o junk22.ps --medium=Letter in03.dat out3.dat 
+  421  a2ps -T 4 -2 -o junk22.ps --medium=Letter in03.dat out3.dat 
+  		# 419 NOT USED !!!
+  423  a2ps -A fill -T 4 -2 -o junk22.ps --medium=Letter in03.dat out3.dat 
+
+
+(4): run 2, input file.
+  369  a2ps -T 4 -4 -o junk23.ps --medium=Letter in04.dat 
+  371  a2ps -T 4 -9 -o junk23.ps --medium=Letter in04.dat 
+		# 369 NOT USED !!!
+
+(5): run 2 output files.
+  413  a2ps -T 4 -1 -A fill -o junk24.ps --medium=Letter out04a.dat  out04b.dat out04c.dat 
+  414  a2ps -T 4 -4 -A fill -o junk24.ps --medium=Letter out04a.dat  out04b.dat out04c.dat 
+		# 413 NOT USED !!!
+
+********************************************************************
+
+107: Some new understandings.
+	a) About changing; dumping into temporary file "staged command" scripts, into a piped version, without temp files.
+
+	It is best to start out, as you have been. You have to build it in pieces. Also, you need to be able to test it. Being aware of 2>/dev/null; to blank out error output, is useful too. Although, sometimes that error output, should be cleaned out TOO. Another thing to check for.
+
+	Then, once you have that done. You can start to see, how to make a piped version. But, imaging the pipe is REALLY just creating un-named temporary files for you and deleting them when it is done.
+	That is the secret.
+
+	b) About regular expressions, and spanning across lines. The start and end of a line, are just another special marker. From my old DOS days, I never would of THOUGHT to go against the boundaries of start and end of line. Now, I understand, they are just another form of a special marker. That makes deciphering regex a different story. Nough said.
+
+	c) grep ruined you. If you would of ever been told to use egrep and show its true proper abilities. You wouldn't of been so inept in regex, for so long.
+
+108) FreeBSD differences.
+	a) /sys/stand for root sys admin.
+	b) vipw for user admin.
+	c) bash shell uses .shrc (not .bashrc).
+	d) vim is still .vimrc ?
+	e) tends to look for default config files in /etc/skel dir.
+	f) /usr/home/theglen4 is home file system, not /home/theglen4.
+	g) Have to setup, to start with bash, over standard csh.
+	h) Linux has a .bash_profile. Don't know if BSD uses.
+	i) Delete key is common problem. (stty erase "^H")
+
+109) gpm -t imps2 -m /dev/mouse (&)
+
+110) Problem causing: scp files.
+	(1) Names with spaces; find '*[ ]*'
+	(2) Names with ?
+	(3) Names with characters requiring ESC markers.
+
+111) Working regex:
+	egrep -i '.*way.*' web2.txt | paste -s - - | fmt
+	egrep -i '.*fix$' web2.txt | paste -s - - | fmt
+	egrep -i '^fix.*' web2.txt | paste -s - - | fmt
+
+	egrep -i '^fix.*' web2.txt | egrep -i '^fix.*[aeiuo]' | wc -l
+	egrep -i '^fix.*' web2.txt | egrep -iv '^fix.*[aeiuo]' | wc -l
+
+	# List only one word named files.
+	ls -l | egrep -v '\.[a-zA-Z0-9]*$' | less
+
+112)
+	# OTHER WAY: Copy to a tempDirectory...
+	fmt -s --width=123 add_sod2.lst >add_sod1.lst
+	fmt -s --width=123 faq_unix2.txt >faq_unix1.txt
+	a2ps -1 --landscape --chars-per-line=120 -T 2 -o junk22.ps add_sod1.lst
+	a2ps -1 --landscape --chars-per-line=120 -T 2 -o junk21.ps faq_unix1.txt
+	ter add_sod1.lst add_sod.lst
+	ter faq_unix1.txt faq_unix.txt
+	# later.
+	rm add_sod.lst faq_unix.txt
+	ter faq_unix2.txt faq_unix.txt
+
+113) Classic usage of egrep (a real grep!)
+	egrep -i '\<200\>' access_log | egrep penguin | egrep -v '^134\.129\.56'
+	egrep -i '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' test2b | less
+
+    egrep '^[0-9]{3}[A-Z]{1}*\*\*[a-z]' pg*2.txt # altered \t --> **
+
+114) Circumstances: Make sure theglen2 had file checked out?
+	Need pre-steps:
+		1) chgrp coders RCS/* # internal files.
+		2) chgrp coders RCS
+
+	cp -p where/file ./
+	su theglen2
+	ci (-u) file
+		# Get no change or error message. Ok. Ignore.
+	exit
+	ls -l file*
+	(if there) rm file
+	co -l file # Since, now you are theglen4).
+
+	Verify:
+	diff file where/file # against original.
+
+	DONE
+
+115) Getting key redefines from vi:
+	:map (enter)
+  ho     yyp0wi/home/theglen4/capBlue/hiddens/rootBin2/<Esc>0kA <Esc>:.,+j<CR>0j
+
+	  The above is the dupLine, insert a path before 2nd (copy to File) and merge ho: KeyMap.
+
+116) Tons of find's (repeated)
+	19:7) The power find: find ./ -name stuff* -print &
+	53:14) find . -name what*.txt -print
+	54:  find ~ -name '*.foo' -print
+	
+	55:  find . -name 'patt' -exec grep patt '{}' /dev/null \;
+	143:  egrep 'keyword' `find . -type f -print`
+	145:  (xarg form) find . -type f -print | xargs 'keyword' /dev/null
+
+	165:  # creates 3 line expansion. would be nice to find a easier text to leave
+	201:	find . -name '*.c*' -print | grep -v '\.c[~p]' | grep -v '\.c$' | less
+	206:	du -ach . | grep ^.[\.].M # find 100M and up.
+
+	207:	du -ach . | grep ^.[\.]M # find 10M and up.
+	278:	b) Also, if you can find how to grab its - goes to lpr (or lp) command without having it auto-dump it to a printer - then perhaps I can personally handle it better.
+	337:		od is obsolete. hexdump -xc shows characters - however, the chars are not aligned with the numberings. Should find a better thing - in the future.
+		hexdump -cb file
+
+	374:73)	A hard way - to find all 3 letter filename files - in a DIR. 2nd is best way.
+	384:	du -ach `find . -type f -print`
+	385:	du -ach `find . -name '*.pdf' -print`
+
+	386:	find . -maxdepth 1 -print # just files in current directory.
+	387:	ls -l `find . \! -type f -maxdepth 0 -print` | sort +4 -n
+	388:	find . \( -name '*.latex' -or -name '*.tak' \) -print # find either names.
+	
+	404:To find bad-formed names.
+	405:	ls -lR >~/junk20.file  # find . -name '*\:' -print ## limitation only finds single bad-formed ESC character.
+	436:83) file finding:
+	
+	437:	find . -printf "%b " -print | grep ^0.* >~/junk20.file 
+	438:	find . \! -type d -print
+	440:	find / -mtime -1 \! -type d -print > /tmp/filelist.daily
+	
+	441:	find / -mtime -7 -print > /tmp/filelist.weekly
+	442:	find /tmp \! -type d -atime +3 -exec ls -l {} \;
+	458:86) find . \( -name 'public_html' -mtime 6 \) -print 2>~/junk20.file
+
+	459:	ls -ld `find . -type d -print`  # show details on DIRs.
+	460:	# Only problem - don't know how to apply find on Non-DIRs.
+	462:87) Due to finding the GIF baloney!
+
+	470:	rm `find . -print` (notice grave character), nice way to delete files and not directories.
+	488:	rpm -qa | grep "part_of_package_name" # to find if you have a rpm installed.
+	489:	du -b | sort +0n -r > foo-du.txt | tail # find bigfiles. (mixed results)
+
+	524:	ls -ltrd `find . -maxdepth 1 -perm +040 -print 2>/dev/null`
+	565:	find . -print | grep -i '\.pdf' | wc -l   # case-less way to find any files.
+	585:		1) A plain find command.
+
+	586:		2) A -type f find command.
+	596:	plain files: find -type f
+	599:	dirs all: find . -print >junk20.file; cat junk20.file | xargs ls -l /dev/null >junk21.file; grep ^dr junk21.file
+	
+	611:	b) tar cvf works great; with non-hidden files (the NON .thing guys). Once, you need to consider the hidden files. It gets very complicated. Even find, can fail on finding .hidden files.
+	612:	c) DO NOT do 'tar ... '.*'' # SINCE it explodes, the archiving. (I believe when it finds any links. It follows them into any dir.s!)
+	614:Point 1: find . -name '.*' -print # works great. Only one secret. It DOES NOT traverse into a .hidden_DIR!
+
+	713:	(1) Names with spaces; find '*[ ]*'
+
+	find . \( -\! -type d -maxdepth 1 -perm +111 \) -print # list current Dir, executables.
+	sed '/^%.*/d' input.txt >output.txt # for TeX, tex, delete any full comment lines.
+	find . \( -\! -type d -mmin -5760 -mmin +10 \) -print # multiple of 1440 minutes.
+		Show files, so many days old.
+	OR ALSO find . \( -type f -mmin -100 -mmin +2 \) -print	
+	# Weird cause, you have to say up to 100 minutes old, AND the to... 2 minutes old.
+		
+	ls -ld `find . \( -type d -maxdepth 2 -mmin -20160 -mmin +10 \) -print 2>/dev/null` 2>/dev/null		
+	ls -li # show inode numbers.
+
+116B)
+    # Applying find - day actives.
+    find . \( -type f -mtime -2 -mtime -1 \) -print # Find for today.
+    find . \( -type f -mtime -724 -mtime +1 \) -print | wc -l # Count of two years ago.
+	find . \( -\! -type d -mmin -5760 -mmin +10 \) -print # multiple of 1440 minutes.
+
+117) Using ldap:
+	ldapsearch -H ldap.ndsu.nodak.edu -l 10 -LLL "iid=otto.borchert"
+	ldapsearch -H ldap.ndsu.nodak.edu -l 10 -LLL "(iid=otto.borchert)"
+	ldapsearch -iid "otto.borchert"
+	ldapsearch -H ldap.ndsu.nodak.edu -p 389 -l 10 "iid=otto.borchert" ou o st c
+
+118) mcopy -m a:afile.txt ./
+
+119) Unix commands and split filesystems: (do commands follow into a symlink) When using links to cross filesystems. (Keyword Markers: follow links)
+	* tar will follow the link, and get stuff.
+	* find DOES NOT cross into the link. Giving one the impression nothing is there.
+	* du command does not follow, links either.
+	* scp: will follow a link (when from other computer).
+	* cp: when done 'relative', does not follow the link. Absolute sure. (across a link)
+
+	* locate, only follows into a directory. If open to others (chmod o+rx gritch5).
+	* ls: does cross into a link.
+	* du -ach: Qur: Using to find size of many dirs, in one dir. WHEN? There are several (or one) dir, as a link. Does it follow the links? NO! ** Good call of Linux. Since, otherwise, it would double count files, and return a too high count.
+
+120) Deep Unix guru tip: How to best resolve key tabbing, names the files in a certain way. What way is that?
+	Put off the ambiguity, till the very very END of the string. The furthest back, the better. (Thats why, when you like putting versioning letter schemes, at the front. It is a pain figuring WHICH ONE do you WANT. Cause then, you literally have to type it, in spite of the very mechanism; which is supposed to minimize typing it.)
+
+	cp sample_2_0013.afile sample_2_0013B.afile # ok
+	cp sampleA_2_0013.afile sample_2_0013B.afile # BAD !!!
+	cp sample_2_0013.afile sample_2_0013.afileB # The least ambiguous.
+
+121)
+
+!/bin/bash
+#
+rechner=$*
+   term="/usr/bin/X11/xterm -ls"
+  xauth="/usr/bin/X11/xauth"
+   redi="< /dev/null > /dev/null"
+#
+if [ -z "${DISPLAY}" ]; then
+  echo "No DISPLAY variable" 2>1&
+  exit 2
+else
+  DISPLAY=`echo ${DISPLAY%%unix}`
+fi
+#
+#
+if [ -z "${HOSTNAME}" ]; then
+  HOSTNAME=`hostname -f`
+fi
+#
+#
+case ${DISPLAY} in
+:*)
+  DISPLAY=${HOSTNAME}${DISPLAY}
+esac
+#
+#
+if [ -z "${XAUTHORITY}" ]; then
+  XAUTHORITY="${HOME}/.Xauthority"
+fi
+#
+# Programs
+#
+remote_xauth="${xauth} -i merge -"
+ local_xauth="${xauth} -f ${XAUTHORITY} extract - ${DISPLAY}"
+       xterm="${term} -display ${DISPLAY}"
+#
+#
+for host in $rechner; do
+  title="-T ${host} -n ${host}"
+  ${local_xauth} | rsh ${host} "${remote_xauth}"
+  rsh -n ${host} "exec ${xterm} ${title} ${redi}" &
+done
+
+exit 0	
+
+121B) Adding x-remote access.
+	Use xhost "+pythagoras" (just +, allows everyone).
+	Otherwise, "xauth" for group-used machine is preferrable. It has more security and such.
+	** Remember, both machines, need to have xhost performed & valid IP-names known in /etc /hosts.
+
+	(To keep rememebered) pythagoras has this in .xinitrc.
+	xhost +roboto.gcrnet.net +lucyiii.gcrnet.net ...
+
+122) Solving the BackSpace delete problem.
+	If you notice that it is a "host related" X windows problem. Read the Keyboard HOWTO.
+
+  stty -a # lists them
+  xmodmap -pke # lists them
+
+  "erase ^?" # you should see this.
+  "Delete 107 and BackSpace is 22"
+
+  stty erase ^?
+  xmodmap -e "keycode 22 = BackSpace"
+  xmodmap -e "keycode 107 = Delete"
+
+  Delete sends ESC [ 3 ~ ...
+
+  Restore character-set switch (to normal) "cat ENT ^O ENT ^D ENT
+	switch cat ^N ^D
+  Redraw screen in most things (bash, emacs, vim) Ctrl-L
+
+  Utility: xev ?, Xmodmap is special with SuSE (?)
+  stty erase "^H" (wrong), erase \177
+
+  # Fix BSD, on Roboto in text screen.
+  (1) Log onto Roboto, (2) On roboto type 'stty erase "^R"'.
+  (3) That is the magic sequence.
+  (4) OR stty erase "^H" --- issue inside of guile.
+
+123) A handier ps stat.
+	ps waux | cut --b=1-20,60-140
+
+124) How to install things in Linux.
+  Well, like for Python. Typically all new packages go in /usr/local
+  cd /usr/local #
+  tar xvfz Pythonxxx.tgz #
+  cd Pythonxxx #
+  NO USE !!! ./configure --prefix=/usr/local #
+  ./configure --prefix=/usr
+
+  This will build it all in /usr/local/Pythonxxx only.
+  Then, when make install #
+  It creates the 
+    /usr/local/lib/python ...
+	/usr/local/include/python ...
+  Types of directories and places files there.
+
+  ** If you want to do a tar in /usr/local/* !!!
+    Ok. For a safety check. Although, who knows how 100% recoverable
+  links and .hidden-stinky files are with TAR ???
+  (Even after an advanced 2 years, with Linux and starting BSD, I still have a lot more to learn.)
+
+  * Other point, if you "need to" disable certain tests, with "make test."
+  rm -iv test_calendar* # in ./Lib /test directory. "regrtest.py" runs all.
+
+125) a kludge - for moving multiple files.
+	ls -d *.new | sed '' | bash
+	ls -d *.new | sed 's///' | bash
+	ls -d *.new | sed 's/\(  XXX  \)\.new$/mv & \1.old/' | bash
+	ls -d *.new | sed 's/\(.*\)\.new$/mv & \1.old/' | bash
+  
+ 	Also, that cp -i, mv -i, mv -iv, rm -i; exist for prompting.
+	cp -i ./* sampleDir # prompt on over-write, form of copy.
+
+126)
+	Linux is a Unix-clone.
+	BSD is a derivative of true Unix. (Loosely the System II version.)
+	The POSIX standard came after 1985-ish, which changed everything.
+
+	BSD is the early distro.
+	Linux is a (total) Unix-clone; which is biased towards the System V rel 3 distro. (SVR3)
+	Therefore, SysV added new and different (ways of doing things) improvements, from the new IPC system [ shared memory, semaphores and message queues] to management of Virtual Memory. (remote file sharing, shared libraries, STREAMS framework for device drivers and network protocols).
+
+	The next major form would be Mach; which doesn't really exist anymore today. Although is continued by QNX, the Hurd
+	* CMU Mach3 (dated - vanishing?)
+	* GNU Hurd (new Mach4!)
+	* QNX (commercial - 196 Meg ISO, free?)
+	* Plan 9 ?
+	* BSD Lites (small port)
+	* VSTa (experimental Plan 9 & QNX, free and interesting).
+	$ MachTen and MacBSD (based on a Mach kernel - non-Intel) hmmm?
+
+	* GNU - Darwin (PPC and I86 ports), from Apple's OS X Open Source, although now being re-owned by GNU!
+
+	Variant list: Digital Unix, AIX (long time ago, first journaling FS)* SunOS and Solaris * HP-UX, SCO.
+	The BUZZ: Two version of Unix occurred BSD (more original) and System V. BSD is not System V. However, Unices today are so similar that only proprietary ones really have major differences. As for Linux, it is a Unix-clone, that resembles BSD and System V in many ways. So, A BSD person could say they have the true Unix, versus a Linux person can only say they have a best of both world - just plan Unix.
+	* Also, Linux can be called a "POSIX-like OS," too.
+
+127)
+	How to stop / start routing.
+	On Anax '/etc/init.d/route stop', /etc/init.d/route start
+	On Roboto /sbin/init.d/route stop / start.
+
+	Other key files, on Anax. /etc/SuSEconfig dir.
+	Plus, some files have "Firewall".SuSEconfig, extensioned names.
+	DIR: /var/adm/SuSEconfig, too.
+
+	Directory Moving:
+	mkdir /usr/var
+	cd /var
+	tar cf - . | (cd /usr/var; tar xf -)
+	cd /
+	rm -rf /var
+	ln -s /usr/var /var
+
+128) anaxagoras mounting.
+	mount -t nfs anaxagoras:/optc/source /opta/coders (of roboto).
+	Note: It seems IP traffic (like when web-browsing) slows it down.
+	"psB rpc" will show the nfs related processes.
+
+129)
+  Output from a reiserFS fsck.
+  
+Will read-only check consistency of the filesystem on /dev/hdb7
+Will put log info to 'stdout'
+Do you want to run this program?[N/Yes] (note need to type Yes):Yes
+6553k will be used
+###########
+reiserfsck --check started at Fri Jul 19 13:32:16 2002
+###########
+Replaying journal..
+0 transactions replayed
+Checking S+tree..ok
+Comparing bitmaps..ok
+Checking Semantic tree...ok
+There were found 2 corruptions which can be fixed only during --rebuild-tree
+###########
+reiserfsck finished at Fri Jul 19 13:34:10 2002
+###########
+anaxagoras:/opta # w
+
+130) Hiding a process, intentionally.
+	nohup dnetc 2>&1 /dev/null & # Hmmm.
+	ls -l 2>&1 1>/dev/null
+
+131) Restoring BSD's /dev/null
+	mknod /dev/null c 2 2 root:wheel
+	chmod a+w /dev/null
+
+132) man -Tps losetup >manList.ps
+	groff (from BSD days) works too. Can't find command format.
+
+133) Work Minutiae:
+	file `which ls` # ???
+	lsof
+	zgrep, zless (z-PREFIX) peeking into gzip files.
+	tail -f afile.txt # interactive, Ctrl-C to leave.
+	su - mercury # switch user and start-up with their shell.
+	lsof, file, ntupdate zeus.?.?
+	mt -f /dev/rmt/ctape1 status @ mag. tape commands.
+	cpio: do list first, then restore & later backup.
+	smbmount ... # strange syntax.
+	cat /etc/passwd | awk -? '{printf $1 $2}' # strange command.
+	zcat
+	SCO: ps ef | egrep 193 #
+
+134) Multiple move: mmv, mcp, mad, mln.
+	groups, id, fold.
+
+135) Starting languages:
+	sml -> ML (Meta Language for Edinburgh LCF [Logic for Computable Functions])
+	gst -> GNU SmallTalk.
+	irb, ruby -> Interactive Ruby shell.
+	ghc -> Glasgow Haskell Compiler.
+	hugs -> Haskell interpreter.
+
+136) /tmp/ vi.recover: could be a security hole.
+	Yet, I need it that way, so it works for me.
+
+137) How to use: mcopy
+	mcopy -pm a:*.* ./
+
+138) How built vtk - python.
+	./configure --with-tkwidget --with-tcl --with-mesa --with-tkwidgets --with-python --without-shared --with-patented --with-contrib --with-common
+
+	The with-common was added on the end, for no reason. Also check, PYTHONPATH, DISPLAY (roboto:0.0), and PATH (:/usr/lib/python(2.1.2c1).
+
+	MORE COMPLEX (Lucy II build):
+	./configure --with-tkwidget --with-tcl --with-mesa --with-tkwidgets --without-shared --with-patented --with-contrib --with-common --includedir=/usr/lib/langs/python:/usr/local/include/tcl8.3
+
+139) Making caml (3.06)
+ (wrong?)    ./configure -prefix /usr/lib/langs/ocaml -mandir /usr/man/man1
+  ./configure --prefix /usr/lib/langs/ocaml --mandir /usr/man/man1
+		vi INSTALL
+		make world
+		make bootstrap
+		make opt
+		make opt.opt
+		make install
+
+140) removing color show, in vi.
+	syntax off (on; to restore).
+
+141) More useful (/ detailed) grep usage:
+	egrep -i --line-number --after-context=7 [--before-context=3] 'subject' *.html
+
+142) Using ftp, as I never have before. (A. It helps to have a ftp server that is open and allows using these features and no hang-ups.)
+
+	Usually on, I think? But, good for practice, anyhow.
+	ftp sailor.gutenberg.com
+	anonymous
+	billsplates@microsuft.com
+
+	binary
+	prompt off
+	lcd ../day90
+	cd gutenberg
+	cd etext90
+	mget *
+
+143) Something from perl & about tee.
+	open( FIZZLE, ">createFile");
+	open( FIZZLE, ">>appendFile");
+	open( FIZZLE, "| outputPipe"); setup output filter.
+	open( FIZZLE, "inputPipe |"); setup input filter.
+
+	The trick about tee, for capturing (textual) STDOUT output is piping.
+	ftp abigsite.com | tee logListings.txt # is an example.
+
+144) cat check1.txt | xargs ls -ld --color=always | cut --b=1-10,50-200 | more
+
+145) *** rsync (not secure), rcp (insecure)
+  rsync -av sunsite.dk::projects/miktex/pub/tm ./miktexmirror
+  rsync -av sunsite.dk::projects/miktex/pub/setup ./miktexmirror
+  # earlier, it was ::ftp/miktex ... But, they closed the 'ftp' port at sunsite.
+
+  # Used from LucyII --> Roboto. (for whatever reason, routing???. Roboto can't push to## Lucy II.)
+  rsync -av -e ssh ./ roboto:/home/gritch5/web3/feb0324/run
+  rsync -av -e ssh ./ roboto:~/web3/feb0324/run # (for same user)
+  		# WARNING - rsync, seems to like to core dump a big file & tries to transfer.
+		# i.e. Not Perfect!
+	// Note: Tried some root changes. Put rsync (of gritch5) into /usr /local /bin.
+	// Killed gritch5 - local /bin copy. Listing now appears on LucyII (when invoked
+	// from). But, Roboto from - still - no go. And LucyII in control, still will 
+	// core dump. Imagine, routing and or port blocking problem. Whatever.
+
+On Lucy III:
+   rsync -av -e ssh ./ glenrt6@192.168.0.95:~/folder/
+in /home/folder/folder dir.
+   rsync -av -e ssh glenrt6@192.168.0.95:~/folder/folder/ ./
+
+145B) Using rsync with remote servers.
+    # Help description
+    rsync -switches --options [host]::[rsyncmodule/path/srcfile] [destination]
+
+    # ODD! I "cannot" get rsync, to work, with Internet servers. Not a one!
+
+    # Mounting a blank.iso image, by loop device, as virtual file system. (On Debian.)
+    /bin/mount /sciz/glenrt7/sarge-i386-1.iso /media/cdloop/ -t iso9660 -o loop=/dev/loop1
+    jigdo-lite sarge-i386-1.jigdo
+
+146) Cut, copy and paste:
+	That when on Roboto, using Ctrl-(mouse drag), and keyboard (shift-INS) seems to solve the line explosion paste problem.
+	While on, Pythagoras, not using the Ctrl and simple mouse-click (to paste) worked Ok.
+
+	* Also, that on Pythag, using shift-INS would cause X-window lockup.
+
+147) cat spam.txt new-message-body.txt | gzip - | wc -c  (spamassassin.org)
+     cat ham.txt new-message-body.txt | gzip - | wc -c 
+
+148) Try this command.
+	ls -l *.tak | egrep -i '.(Jan | Feb).' | sort -k 6 -k 7
+	ls -l *.{PS,GCD} # Doing wildcard "set" searching ls listing.
+	egrep -il '(c|b|r)at' *.tak # find cat, bat or rat.
+
+149) On BSD, how to invoke update locate.
+	/usr/libexec/locate.updatedb
+
+150) FreeBSD branding.
+	Can I run the Linux version on Free-BSD?
+	Yes. Please do the following:
+	Install emulators/linux_base from Freebsd CD.
+	Edit /compat/linux/etc/yp.conf and put the correct server in there.
+	Download the Linux folding console and cd to the directory.
+	% brandelf -t Linux FAH3Console
+	% ./FAH3Console
+	wait till it download the core than kill the fold job.
+	% brandelf -t Linux FahCore_65.exe
+	% ./FAH3Console
+	and you're done! (Thanks to "gotti" for the suggestion).
+
+151) BSD: pkg_info -I -a | egrep -i expat
+    BSD: pkg_info -I -a | wc -l # number of packages.
+	pstree ap 
+	ps ax | sort -n
+
+	Proper tar Suffixes.
+	tgz = -z
+	bz2 = -bzip (BSD only)
+
+	Release 5 HAS: acl, getfacl, setextattr, getextattr, extattr
+		setext attr, getext attr, ext attr.
+
+152) Whenever, you have a weird problem with networking.
+	Don't overlook a name resolver error. (I just had a problem with putty shh on a new Win95 box. Roboto would let it connect, Lucy II would. Pbm: Fixed hosts file in etc and everybody happy.)
+
+152) About public keys and private files.
+	public key repositories: http://pgp.mit.edu, http://www.keyserver.net
+  (former is first, later is last).
+	I'll use GPG.
+
+	# Invoke for user to create key pair.
+	gpg --gen-key
+	# Add user key to public key ring.
+	gpg --import key-file
+	# Extract a user's public key into file to send to key server
+	gpg -a --export -o key-file username
+	# To encrypt and sign a file.
+	gpg -e -s -r mercury7apollo@gohip.com filename.txt
+
+	PUBLIC: pubring.pgp, PRIVATE!!! : secring.pgp
+
+	# Simply encrypt
+	gpg -c filename.txt
+	# Decrypt
+	gpg -d codeFilename.txt >filename_reappear.txt
+
+    # Setup
+    key length: 3000 bits
+    years expire: 3y.
+	gpg -a --export -o ~/sendout.pub 'lucy machine'
+	gpg --import othermachine.pub
+
+153) Curious script. cat contents of most recent file in Dir.
+	cat `` --> cat `ls -tr | tail -1`
+
+154) Using vi: How to do the cut and paste.
+	A) Know number of lines.
+		Require "yank" on (top) text line and last yanking line, is "blank" line.
+		Then, yank.
+	B) Move up one (or do "k") and paste.
+
+155) Location of FreeBSD 4.0 Pythagoras fvwm directory.
+	/usr/X11 /lib/X11 /fvwm.
+
+156) Useful egrep marker
+	egrep -i -B1 stuff afile
+
+157) Fixing TeX document for PDF easy reading in Windows.
+	Built dvipdfm by: ./configure --prefix=/usr/share --data-dir=/usr/share
+	* As root. Ran "mktexlsr"; Sort of like an updatedb for kpathsea files.
+	
+	dvipdfm -f /usr/share/texmf/dvips/base/psfonts.map theFile.dvi
+	# Hope to get defaults in .dvips file of gritch5 Home Dir working, too.
+
+	FreeBSD: /usr/local/share/texmf/tex
+    ??? glenrt6@lucy3:/usr/local/share/texmf/dvips/config - File: psfonts.map
+
+157B) Where are R3's tex Fonts?
+    /usr/var/tmp/texfonts/tfm/jknappen
+    /usr/var/tmp/texfonts/pk/bjtenex/jknappen
+
+157C) Running latex.
+    (tex) latex afile.latex
+    dvips -o afile.ps afile.dvi
+    ps2pdf afile.ps
+
+    pdflatex afile.latex # Or.
+
+158) Sourceforge.net ssh login addresses.
+	ssh shell.sourceforge.net -l gritch5
+	CVS ACCESS: gritch5 cvs1.sourceforge.net (cvs1 ???).
+
+	SF home-dir: /home /users /g /gr /gritch5
+	# 5 meg quota
+	GRIN home-dir: /home /groups /g /gr /grin ::: /htdocs , /cgi-bin.
+	# 100 meg? quota
+
+	MySQL DB ACCESS: (inside shell...): mysql -u grin --database=grin --host=mysql -p
+
+    Common Url Handles List:
+    shell.sourceforge.net
+    grritchie.spymac.net
+    ftp.spymac.net
+    ftp.cs.ndsu.nodak.edu
+    www.floatingpointdesigns.com
+    grin.sourceforge.net
+
+    savannah.nongnu.org/projects: CVS only.
+    savannah.nongnu.org/projects/ural
+	
+159) Word riddle. How many 7 letter words in common English dictionary?
+    egrep -i '^[a-z]{7}$' web2.txt | uniq -ui | wc -l
+
+160) Advanced scp trick:
+	scp user@remotehost:'`echo foo*bar[0-9]`' ./
+	scp user@remotehost:'`find / -mtime -1`' ./
+
+	scp -pr user@remotehost:'`find / -mtime -1`' ./ # GR version.
+More:
+	tar -cf - -C srcdir . | tar xpf - -C destdir # plain use.
+	tar -cf - -C srcdir . | ssh remote_host tar xpf - -C destdir # ssh use.
+
+	ssh remote_host tar -cf - -C srcdir . | tar xpf - -C destdir # other way.
+	# HOT COMMAND!!!
+	# run on Lucy III, tar over, without follow links. (following)
+	ssh perseus tar -cf - -C /home/glenrt6/bin/tmp/hold/ . | tar xpf - -C ./
+	# R3: current dir: /optx/glenrt6 /suse73/cd1
+	# Then, wait. Basically, look at disk activity to gauge when done.
+	# --
+	# Note: The cp cmd, doesn't usually do .Hidden-Files.
+	# This will though.
+
+	# Pushing from R3 to Plato.
+	tar -cf - -C ./ . | ssh -l gritchie plato tar xpf - -C /home/nfs
+
+	make buildworld 2>&1 | ssh remote_host cat \> /tmp/make.log # send log to other system.
+	# Make sure "escape" redirection. "\>".
+
+	tar -zcvf - DIRECTORY/ | /usr/bin/ssh -l LOGIN HOST 'cat - > file.tar'
+	# Use of tar to move a dir. (Jan 2006 ??? What?)
+
+	rsync -rltgpvz --exclude=log/ -e ssh LOGIN@HOST:/remote_dir .
+	# Use of rsync with ssh.
+
+  FILE: /usr/local/bin/sshtar
+  #!/bin/sh
+  if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]; then
+  printf "\n\n\tExample:\n\n\t\tsshtar username hostname_or_ip
+  /dir/to/copy\n\n"
+  exit 0
+  fi
+  /usr/local/bin/ssh $1@$2 "cd $3 ; tar cf - ." | tar xvfBp -
+# NOTE: Sucks files into current dir.
+
+	ssh -e none
+	# An useful option to set, involving escaping interference.
+
+	tar cf - /home | ssh -e none user@host \( cd /home \; tar xvf - \)
+	# To change dir. when sshING stuff.
+
+160B) Running text processing VIRTUALLY!
+    cat input.txt | ssh gritchie@plato diction >output.txt
+    # Using the diction program on Plato, from Perseus.
+    # Shell script: gramCheck.sh
+
+160C) Creating tar file, with "links" (with links).
+    tar -cf - -C suse73 . >~/bin/tmp/tmp/x.tar
+    # Be in dir. above "suse73." Then, it will pull all of it & not duplicate Links.
+    # i.e. no follow links
+    tar cf - . | (cd /home/adir; tar xf -) # FreeBSD tip
+    tar cf - -C adir . >/other/fs/bigtarFile.tar # plain tar maker, preserve links
+    tar cf - -C adir . | gzip >/other/fs/biggztar.gz # How to gzip, at same time. Don't recommend for network moving though.
+
+160D) More 'preserve link' magic. (1) -C in tar command means; change into the said directory.
+
+    # How to do a complex tar 'full image' creation, of just certain directories?
+    (1) ls -d a* j* >fil1.lst
+    (2) cat fil1.lst | xargs tar -cf - -C . >/optx/glenrt6/dvdBack/dvd4/web06AJ/web6aj.tar
+    
+    (3) Obtain the complement, by ls for whole sub-dir list. Then, egrep '-v' out the ones you do not want.
+    (4) egrep -v '^[naj].*' fil3.lst >fil3a.lst # REMEMBER, to manually check it. Often 'plain files' will appear in list.
+
+160E) Network copy, create, of a large tar 'preserve link' image.
+    tar -cf - -C games . | ssh -l glenrt6 lucy3 \( cd /optx/glenrt6/perseus\; cat \> ./afile.tar \)
+    tar -cf - -C games . | ssh -l glenrt6 lucy3 'cd /optx/glenrt6/perseus; cat - >./afile2.tar'
+
+    login root
+    cd /
+    tar -cf - -C usr . | ssh -l glenrt6 lucy3 \( cd /optx/glenrt6/perseus\; cat \> ./perseus_usrDir.tar \)
+
+160F) Trying to 'selective copy' files from one machine, to another.
+    tar -cf - -C stuff2 . | ssh -l glenrt7 perseus \( cd /home/glenrt7/bin/tmp/stuff2\; cat \> ./test.tar \)
+    cat fil.lst | xargs tar -cf - . | ssh -l glenrt7 perseus \( cd /home/glenrt7/bin/tmp/stuff2\; cat \> ./test.tar\)
+                        tar -cf - . # "pull the dot!' Now, it only transfer file, listed in response file.
+
+    # Advice this is tricky. Wtv.
+    # Detailed explaination. (1) Using the 'tar' above, involves 'piping'. So, you can't really get around this.
+    # However, if you break it into a two step process. Grab and tar over, the file, to 2nd system. Then,
+    # --- Execute a shell script and clean up, the 2nd system, and complete selective transfer. This is doable.
+
+    Requirements:
+    (1) Sys1: Lucy III
+    (2) Sys2: Perseus
+
+    (1) Sys1: need the 'file.lst' response file. Then, 'copy1.sh' and 'copy2.sh' to move the files.
+    # Remember this is for 'repeating transfers.'
+    (2) Sys2: Needs the 'step2.sh' file, to be ran, by activated ssh login.
+
+    glenrt7@perseus:~/bin/tmp/stuff2 2075:>cat step2.sh
+    cd /home/glenrt7/bin/tmp/stuff2
+    tar xfv mover.tar
+    rm mover.tar^Z
+
+    copy1.sh:
+    cat file.lst | xargs tar -cf - | ssh -l glenrt7 perseus \( cd /home/glenrt7/bin/tmp/stuff2\; cat \> ./mover.tar\;\)
+
+    copy2.sh:
+    ssh -e none -l glenrt7 perseus '/home/glenrt7/bin/tmp/stuff2/step2.sh'
+
+160G) Pulled files from FPD, since tar 'too big' to complete under AVM quota.
+    ssh gradmin@www.floatingpointdesigns.com tar -cf - -C /var/www/html/ . | tar xpf - -C ./
+
+160H) XXX FreeBSD -C adir format, does not exist. (Scratch that!)
+    XXX Only Linux is using that switch!
+    Needs atarFile.tar before -C adir switches!!!
+    
+    Stick FreeBSD on same machine - solution.
+    tar -cf - -C glenrt6 . | cat >/optx/glenrt6/saveDir/aimage.tar
+
+161) Format an ms-dos floppy on Linux.
+	fdformat /dev/fd0 (SuSE floppy?)
+	mformat a:
+FreeBSD way:
+  fdformat /dev/rfd0.1440
+  newfs_msdos -f 1440 /dev/rfd0
+OR:  # Used the below on Pythagoras.
+  fdformat /dev/fd0
+  newfs_msdos -f 1440 /dev/fd0
+
+162) Way to dump contents of ms-word files.
+		catdoc thefile.doc | less
+		word2x -f [latex | text] thefile.doc
+	New process X monitor
+		qps
+
+163) Doing tars.
+	tar doesn't work with indirection operator. Have to use cat & pipe & xargs.
+	# Typical old system backup command.
+	cat fil1.dirs | xargs tar cvfz /sciw/glenrt6/cdBackups/theback1.tgz 1>/sciw/glenrt6/cdBackups/theback1.list
+	tar cvfz /sciw/glenrt6/cdBackups/theback1.tgz ./bin/* ./vent/* 1>/sciw/glenrt6/cdBackups/theback1.list
+
+	# Meanwhile, in other window. in /sciw DIR.
+	tail -f theback1.list # Shows progress, while that file is capturing verbose output.
+
+164) Using the .md5 files on web sites.
+	Apparently, do this, with them.
+	md5sum -c thefile.md5 # It compares the inner mentioned file & does the check.
+
+165) FreeBSD find duplicate package one-liner.
+	# pkg_info | sort | sed -e 's/-[0-9].*$//' | uniq -c | grep -v '^[[:space:]]*1'
+	pkg_info | sort | sed -e 's/-[0-9].*$//' | uniq -c | grep -v '^[[:space:]]*[1-4]' # Seems packages can be multiply installed? Ok.
+
+166) Weird "archival *.latex" fault.
+	I didn't notice it, until on Lucy III. However, the full backup crons.
+	A) tarLatex: *.latex *.py
+	B) tarTak: *.tak
+
+	*** Do not seem to be "truly" capturing all said files.
+	They are invoke by a specialized "find" command, launched by root, specifying the /home /glenrt6 DIR, & no mention of time or date requirements.
+
+	Maybe, I'm doing an incremental & don't know it?
+	ANS: I'm exceeding the ``line length" maximum, for the Linux CLI. This must be it. Solution. Use a temporary file. (1) Capture find result to temporary file. (2) cat that file & xargs to tar, as usual. (3) rm the temporary file.
+
+167) Build instructions for DrScheme.
+	a) build from source tar. (no reason)
+	b) In dir /home/mercury /oak/branch /plt.
+	c) ./configure --prefix=/home/mercury/oak/branch/drScheme
+	d) make; make install
+	e) now run things from ~/ oak /branch /drScheme.
+
+	*** TRICKY: un-tar SRC into any dir.
+	CALL BY: ./configure --prefix=/usr/local/drscheme
+	make; make install # Should see ask server, for updates?
+	
+	Manual Linux: f)
+	ln -s /usr/local/drscheme/bin/*** /usr/local/bin/***
+	drscheme, mzscheme, mzc, dred, tex2page.
+
+168) Pulling "individual file" from tar.
+	tar xfz theFile.tgz afile.list2
+	tar xfz theFile.tgz tmp2/sampleFile.list2
+
+169) sed commands.
+	''   's///' search \& replace
+	'//d' delete line?
+    'g/^\s*$/d' delete blank lines.
+
+169B) Interesting negative egrep
+    egrep -il barr* ` find `
+    barri
+    barr[^i]
+    barr[^a-m]
+    barr[^n-z]
+    barr[^o]
+    List: wedd[i], ???
+    Words: wedding, barrow, barrier.
+
+170) Linux shared memory segments Info. Command.
+	ipcs -u (used)
+	ipcs -l (limits)
+	[FreeBSD] ipcs -T (all info?)
+
+	# More VM info. cmds.
+	ps -va 
+	ps -va # egrep -i bash | wc -l ## Number of shells.
+	ps -s (by signal?)
+	ps -j (by jobs?)
+
+	/sbin/ldconfig -p # showed installed, shared libraries "Connections" file.
+
+	# Locating your glib library files.
+	locate libglib (lib glib)
+	cd /usr/lib
+	ls -ld libglib*
+
+	# (deciphered) lib glib -1.2.0.so # implies glib 2.2.0 (I think.)
+
+	ifconfig # report mode & configuration mode.
+	netcfg # X-win (as root) configure tool.
+	setserial
+
+171) UNIX "enumerations"
+	a) The particulars of "fields" in the passwd file.
+	b) The particulars of "what" of lines, in a typical MUA email letter.
+	c) Fields for the inittab file.
+
+172) Language gcc package group.
+	gcc, gcj, gdb, g++, g77, [link] c++, cpp
+
+173) Handy way to "slow" pop-up of X-apps, for switching to other virtual window.
+	Use sleep command.
+	sleep 2; gv thePS.ps &
+	sleep 2; gv texUkFAQLetter.pdf & # 'gv' can ??? also read PDFs. Interesting.
+
+174) Building pdftex
+	pdftex -ini -fmt=pdftex plain
+	# Enter \dump
+	# end.
+	pdftex -ini -fmt=pdflatex latex.ltx
+	# Enter <CR>
+	# end.
+
+	# To use.
+	pdftex -fmt=pdflatex whatever.latex # pdflatex.fmt, needs to be present.
+
+175) vi mapping commands
+	# to list the mappings.
+	:map
+	:set # keys.
+
+	!geqnaab_ USE: ho --> "ap  
+	GRAB: "a20x
+
+176) Schedule of "crons" backup procedures.
+	1 --> General "track" activity cron.
+
+	** Directory Sorted Listing:
+	2 --> pockets "bash_history" (tarLatex) *.latex *.py [glenrt6 user!]
+	3 --> pocket2 (tarTak) *.tak *.text [glenrt6 user!]
+	
+	4 --> pocket3 (tarLisp) *.lsp *.pl *.txt [glenrt6 user!]
+	5 --> pocket4 (tarLisp2) *.lsp *.pl *.txt [mercury user!]
+
+	6 --> pocket5 (tarScheme) *.scm [NOT! mercury user! DOING: all /home]
+	7 --> pocket6 (tarTak2) *.latex *.tak *.text [mercury user!]
+
+	8 --> pocket7 (tarSIM) DIR: /sciz/glenrt6/silProject [glenrt6 user!]
+	9 --> pocket8 (tarTav) DIR: *.tav [glenrt6 user!]
+	10 --> (future)
+	11 --> (future)
+
+	** USER SORTED Listing:
+	2 --> pockets "bash_history" (tarLatex) *.latex *.py [glenrt6 user!]
+	3 --> pocket2 (tarTak) *.tak *.text [glenrt6 user!]
+	4 --> pocket3 (tarLisp) *.lsp *.pl *.txt [glenrt6 user!]
+	8 --> pocket7 (tarSIM) DIR: /sciz/glenrt6/silProject [glenrt6 user!]
+	9 --> pocket8 (tarTav) *.tav [glenrt6 user!]
+
+	5 --> pocket4 (tarLisp2) *.lsp *.pl *.txt [mercury user!]
+	6 --> pocket5 (tarScheme) *.scm [mercury user!]
+	7 --> pocket6 (tarTak2) *.latex *.tak *.text [mercury user!]
+
+    Latex: 1,2   ::PS
+    Lisp: 5,6    ::P3
+    Lisp2: 7,8   ::P4
+    Scheme: 9,a  ::P5
+    SIM: d,e     ::P7
+    Tak: G-0,G-1 ::P2
+    Tak2: b,c    ::P6
+    Tav: G-2,G-3 ::P8
+
+177) Advanced vi.
+	* How to get a search & replace, to re-launch?
+	:%s <Enter> # caution, flags are re-asked (gc).
+	:help substitute
+
+	# vi's help system, is kind of "bookish" you have to read it. If you don't know the full term, for "s." As I did here. It is poor for a newbie.
+
+178) Accessing other user directory. (simple Unix)
+	cp -p ~mercury/oak/branch/sample.ps ./
+
+179) the dot command, to inherit environment settings into bash current shell.
+	setDisplay.sh 
+	CONTAINS: export DISPLAY=whatever
+
+	# Inherit by user running.
+	. setDisplay.sh
+
+180) A complex command line - looking for files *wildcard* with name.
+	bline; egrep -il 'glen' `find . -print | egrep -i '(\.c|\.c++|\.cpp|\.cxx)'`
+
+181) lynx www.yahoo.com
+	lynx 216.109.118.70
+
+182) Command line grammar: besides egrep regex, or bash shell regex.
+	[] optional
+	file = explicit, i.e. required.
+	<file> = my style?
+	(a,b,c) = alternations. # egrep regex.
+	{3,5} = repeat numeration.
+
+183) vi ends:
+	0P (zero)
+	$p (with space at end of line).
+
+184) reg-exp in Scheme (PLT)
+	(1) If (regexp "something")
+	(2) (regexp "(glen)+")
+	(3) (regexp "(glen|sue)+")
+	(4) (regexp "(glen)+.*")
+
+	Search on regexp-match (1); only returns first find.
+	Where as, -match (2); returns each find.
+	
+	Form (4) shows "first glen" only.
+	(regexp-match-positions (4) a-string ??)
+		?? 6 ==> Shows next.
+		?? 15 ++> Shows next.
+
+185) Doing tricky "hide backup dir" backups, in a directory.
+	a) chmod u-r backups
+	b) tar cvfz backups/friMorn.tgz *
+	c) # to ls it, chmod u+r, cd into & then undo.
+
+186) BSD difference commands.
+	seems to be a --b ==> -b form.
+	and --b=30m ==> -b 30m value form change.
+
+	cut --b, cut -b
+	split --b, split -b
+
+	BSD vi <> vim, as SuSE vi -> link; vim.
+
+	mcopy # Seems to have a hang-up about being specific.
+	mcopy a:* ./ # No Work!
+
+	ls -N: Linux Ok. BSD missing switch.
+	NO ls -T 0
+	NO ulimit settings permitted, on BSD. (It seems?)
+	NO ls --color=tty. instead ls -G
+	Linux only; "dircolors -p" used by LS_OPTIONS. BSD no?
+		(I'll fix later.)
+		
+	!!! whereis -> Way better!
+
+	pkg_info -a -I | egrep -i linux
+	pkg_add -n new_package # Sample verbose run.
+	pkg_delete
+	pkg_delete -f
+
+	ls -lo # show new flags.
+	sockstat -4 # show all sockets.
+	chflags -R schg /bin # set a no change flag.
+	# OR --- chflags -R noschg /bin 
+	sysctl -a | egrep -i secure # show securelevel.
+	ps waux # List detail on processes.
+	chown -h mercury a_link_file.dat # Otherwise, doesn't effect links.
+	pstree ax # Linux -ax
+	nice -n 5 xsnow &
+	ncftp # better ftp # SuSE 7.3, has knows when already DLed a file
+	# feature.
+
+	## Tricky, but, sometimes installing new Linux sources.
+	gmake # not make, to build it.
+
+	sort -f (fold cases: form)
+	vi shell option: ESC d, deletes a word.
+
+	aterm -tr -fg yellow -tint blue &
+	ls -ld * | less # KILLS color dumping, when on funny terms.
+	# Difference with Indicating ESC in macros of vim.
+	map ho ithis is insert<ESC> # Actually type <ESC> !!!
+	map ho :.,+j<Cr> # Actually type <CR> !!!
+
+	# mounting CDROM, needs type.
+	# FreeBSD? : mount -t cd9660 -o nosuid /dev/acd0 /cdrom
+	/bin/mount -t iso9660 -o nosuid /dev/cdrom /cdrom
+
+	aterm -fade 66 -shading 50 -tr -trsb -sr -st -sl 2000 -bg black -fg green -fn -*-lucidatypewriter-medium-r-normal-*-17-*-*-*-*-*-*-* -sb -name xterm -n Lapdog -T 'My Transparent XTerm' &
+	xterm -T 'Save Your Bookmarks. GLEN' -geometry 100x4+300+500
+	aterm -bg black -fg green 
+
+	mozilla about:buildconfig # gcc 2.9x or 3.x issue.
+
+	# Building ports - readmes.
+	cd /usr/ports
+	make readmes
+
+	# GREAT ASPECT of FreeBSD.
+	When you "vim afile.txt"; SuSE creates a temp file, in this directory.
+	Thus, messing up the T/D stamp of the DIR. BSD DOESN'T!!!
+
+187) BSD tip:
+	pkg_info | sort | sed -e 's/-[0-9].*$//' | \
+	uniq -c | grep -v '^[[:space:]]*1'
+
+Useful Commands:
+	dirSize2 | egrep M | sort -n | # big-dir-find.
+	pkg_info -a -I | wc -l # pkg-count.
+
+188) Mercury install steps, as just glenrt6.
+	Located: /usr/lib/langs /mercury, owned by glenrt6.
+
+	./configure --prefix=/usr/lib/langs/mercury
+	#NEW ./configure --prefix=/usr/lib/langs/mercury --disable-extern-debug
+	make # ran twice. Is it Ok?
+	make install
+
+	# PBM: Seems to "need" lib pthread, to be found. Working on.
+	# Unable to rememdy.
+	
+	./configure --prefix=/usr/lib/langs/mercury --disable-extern-debug --disable-par-grades
+	# USING the above configure. It make && make install, Ok.
+
+	Mercury last (it's installer said)
+	-- Installation complete.
+
+	-- Don't forget to add /usr/lib/langs/mercury/bin to your PATH,
+	-- /usr/lib/langs/mercury/man to your MANPATH,
+	-- and /usr/lib/langs/mercury/info to your INFOPATH,
+	-- and to add the following lines to the `.emacs' file
+	-- in your home directory:
+        (setq load-path (cons (expand-file-name
+             "/usr/lib/langs/mercury/lib/mercury/elisp") load-path))
+        (autoload 'mdb "gud" "Invoke the Mercury debugger" t)
+
+189) Windows 2k notes on Photos in Corel Photo-Paint
+	Resizing riddle.
+	1) --> Resample command.
+	Click: Top, Bottom, then Middle boxes.
+	Set resolution to 300 x 300. (For even-ing scale.)
+
+	2) 2nd Resample issue. (To scale down from purer Hi-Res forms.)
+	Click: Top & Middle boxes.
+	Set Res: 120 x 120?
+
+190) Setup of 2nd Perseus, for SuSE 7.3, Afterstep, on Linux.
+	(*) Choosing 800x600, at start of install.
+	(*) Selecting full install.
+	(*) Later, adding fullest install parts, from Recall of Achilles floppy.
+	(*) 
+	(*) Just getting the system running.
+	(*) 1. Networking. The SiS 900 network chip.
+	(*) 2. Sound card. chip is a C-Media 9738. (Un-resolved) Soln: Seems to be getting driver, for kernel module, specific to new chip. If exists. [Do later.]
+	(*) 3. Get basic Linux shell command files. lsl, lsa, and so on. Plus, hitr3p & hitr3root shell scripts.
+	(*) 4. Install my favorite python.
+	(*) 5. Ins. Mozilla 1.4 (or 1.5?)
+	(*) Make link, for xload --> xshow. Because of issue with xlock CLI interference.
+	(*) 
+	(*) AfterStep specifics:
+	(*) 1. Getting short-left arrow, valid for konsole.
+	(*) 2. Get personal background image, into /usr/share /afterstep/ backgrounds. (*) Solve. By simply copying image.jpg to the dir.
+	(*) 3. Start-up KDE, select fonts 8859- normal. Select UNIX style. Like blocked window to konsole. A little harier. (*) Get modified feels.DEFAULT, from old system. Locate into /usr/share /afterstep /feels. [Only need to comment out, "Key Left ... A ... S" ] (*) Then, as user, select *Desktop *Feel *DEFAULT.
+	(*) 
+	(*) Getting color Cannon working.
+	(*) (1) Use yast2, after xdm is running.
+	(*) (2) Select Printers - yast module affair.
+	(*) (3) Use BJC-620, color depth 16 bpm, letter size (full) letter.
+	(*) (4) Make SURE, use "double enter key" method.
+	(*) It uses "only" the 610 driver. Select full color, not "high speed."
+	(*) (5) Do test page.
+	(*) 
+	(*) Install mozilla 1.5, by "glenrt6" hijaak of "root" /opt /mozilla.
+	(*) Then, needed to fix font problem in mozilla. Have notes.
+	(*) [1] un-check: allow other fonts.
+	(*) [2] min. font size: 12! (Seem to be two most important sets.)
+	(*) 
+	(*) 
+	(*) 
+	(*) 
+	(*) 
+	(*) 
+	(*) 
+
+191) Linux: how to change "auto-startup" of runlevel.
+	5: xdm system
+	3: cli system
+	--> edit /etc /inittab
+	initdefault change id:5 --> id:3
+
+192) Magic keys - if Home / End, no work.
+	Ctrl-A : head
+	Crtl-E : end
+
+193) Using MySQL under linux.
+	Basic commands: mysql (an environment), mysqladmin (user admin.tn)
+	mysql -u mysql; mysql <CR>
+	# TROUBLE? mysqladmin -u root password sample7@
+
+	mysql -u mysql
+    mysql -p -u webman -h localhost 
+	SET PASSWORD FOR 'root'@'localhost' = PASSWORD('secret_password');
+
+194) Pulling a PostScript page selection, with ps-utils.
+	psselect -p1-16 input.ps output.ps
+	psselect -p2 source.ps | lpr 
+	psselect -e input.ps output.ps
+	psselect -o input.ps output.ps
+	psselect -p1,3,7,8,10,11,15,16 input.ps output.ps
+
+195) Re-starting Knoppix (lilo), after Windows mucks up MBR.
+	Used SuSE v7.3 Rescue mode, it saw EXT3 FS. Plus, used "chroot" command, in root user terminal.
+
+196) Basic "jump start" ifconfig, on Knoppix. It usually only wants Dynamic IP.
+	/sbin/ifconfig eth0 inet 192.168.0.90 netmask 255.255.255.0 up
+	# I thought, "add" had to be in there somewhere? Maybe just for gateway edits?
+	/sbin/XXXX wrong! ifconfig add gw???
+	/sbin/XXXX ifconfig delete gw???
+
+Linux form:
+	 /sbin/route del default gw 192.168.0.10
+	 /sbin/route add default gw 192.168.0.110
+
+196B) Knoppix instructions:
+    # Use the 12-2004 release of Knoppix. (Mar-2004 failed screen.)
+    # NO WORK: knoppix screen=1024x768 xvrefresh=70 # Defaulting? depth=24
+    # Presume, color depth, Knoppix doesn't like, and 70 refresh fails, so drops to 800x600 resolution.
+    knoppix screen=1024x768 depth=16 xvrefresh=60
+
+    GUI: Knoppix: Network: Network card
+    no DHCP, 192.168.0.139 # Aristotle fooling, gatewy + names-vr: 192..110 (or 10)
+    # Nameserver: 205.171 .3.65 # Qwest
+
+    konsole: xhost +192.168.0.122: 90: 202 (socrates)
+    ssh -l glenrt7 192.168.0.90
+    # Seems to be "some back-font issue." Suggest, run net-card setup, first thing. Otherwise, konsole is solid black.
+    # "confirmed," Just do the 'network setup' first thing, not konsole run.
+
+197) Weird, about ending slash, on FreeBSD, using find -print (files) cmd.
+	As root, find /home -type f -print; no work.
+	Versus, find /home/ ... ; then it works.
+
+198) rpm basics:
+	a) normal install, rpm -i bc-1.06---
+	b) upgrade option, rpm -U bc-1.06---
+	c) full force install, over deps or errors, rpm -ivh --force --nodeps bc--rpm
+	d) standard query all, rpm -qa
+	e) query, test belongs to, rpm -qi bc
+	f) show contents of package, rpm -ql bc
+	g) detailed contents of an RPM, rpm -qilp bc---rpm
+	h) normal un-install, rpm -e bc---
+
+199) Star out passwd, of used in /etc /passwd. Quick way to make, never login.
+	Star out group passwd, way to make a user, unable to join a group. (Such as for an application, after it is installed, then to "block" members from joining it.
+	* user admin tools: useradd, userdel, usermod, groupadd, groupdel, and groupmod.	
+
+200) Using Debian and "apt" tool.
+	First, you have to set it up.
+	apt-setup. Interactive program & pick who you trust. (kernel.org)
+	apt-get install gcal
+	See more notes, in Socrate's Head.
+    # To clear dload cache of packages.
+    apt-get clean
+
+201) Debian command
+    dpkg --get-selections | awk '{print $1}' | xargs dpkg -p | grep Installed | awk '{t+=$2; print $2 " " t}' 2>&1 | less 
+	cat a.tarBig | md5sum # Debian problem, to correct SUCCESS (only) reported.
+	# When md5 sum checking a large > 2Gig file.
+
+	# Correction for Debian gcal
+	gcal --type=standard # So, normal to me. Not Deutsch.
+
+	# Listing the packages, on Debian.
+    dpkg --get-selections 
+	dpkg -l apache # get version details.
+	
+202) href tips: Using mailto with spaces, to hide spamer viewing data.
+	Auto-filling email fields, with mailto HyperLink 
+	?sendto="tom@tomdock"&subject="making money"
+
+203) Clearing arp cache:
+	arp -d -a # Possible someone arp slamming, trick to get switch to being
+	# a hub. An aid to sniffer on same netwk. Hmmm.
+
+204) Using zip in Linux, to get to DOS. (Why? For Windows people.)
+    Keywd: encode zip files.
+	zip -R movePack `find . -print` # Only given files, no recurring.
+    zip -r # Use THIS ONE, most of the time. Preserves path names.
+	zip -e test *.txt # To put in passwd. Presume, only a gateway passwd.
+    zip -eR move2 ./*
+
+205) glensite1.com Steve's AVM hosting notes:
+	* Important path:
+	/home /gradmin /mainwebsite_html /awiki
+	# Real Hosting LINUX path!
+	/home/virtual/site21/fst/var/www/html/awiki/lib/Request.php
+
+206) Email saving forms:
+	hotmail: Save PageAs
+	btinet: FrameAs
+	gohip.com: FrameAs
+	slashdot: Save PageAs
+	google: Save PageAs
+
+207) Using jigdo-lite
+	Run the script.
+    # Hey! You have to get sarge..., from web site, first.
+    # URL: http://cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area/i386/jigdotemplates/
+    # jigdo file & jigdo.template
+	sarge-i386-13.jigdo # Enter this
+	ftp://ftp.debian.org/debian/ # Enter this
+	# Then wait!
+
+    jigdo-lite sarge-i386-2.jigdo # Then, enter (all files), then ftp://...
+
+208) Wiping out a many-hides directory trick:
+	# If you "rm -r plain-name" above it. All the "hiddens" inside of it, go away. Hmmm.
+	cd ..; ln -s ./troublePartentDir  junkHandle
+	find_l; rm -r ./troubleParentDir
+
+209) # Playing with "fortune."
+	# To build a fortune file to database. 
+	strfile lost
+
+210) By accident, I found "we" a we X-Windows Environment application?
+	Looks like a file manager??? Ok?
+
+211) ncftp webhost.btinet.net # No use!
+	ncftp -u pythagoras ftp.btinet.net
+    # include ncftp
+    # list directories.
+    mget -R ./dir1 ./dir2 ./dir3
+
+    # working with QMC2 site - PASV mode (off)
+    ncftp -u admin@xxx www.quinn.com passive
+    # Otherwise, edit .ncftp
+
+212) After over two years, I still have an account on NDSU's CS server.
+    Although, NDSU policy would "order" it cancelled. Whatever?
+    There is actually, only a 40 meg quota.
+    ssh www.cs.ndsu.nodak.edu -l gritchie # PWD: zastom7.
+
+213) What are the top three Scripting (for Unix Admins) Languages?
+	bash shell scripts
+	perl # perl mods, have a lot of power, too.
+	awk # I prefer gawk!
+
+214) vi tips, the tab versus space paradox.
+	set softtabstop=2 
+	set shiftwidth=2 
+	set tabstop=4 
+	set expandtab 
+
+    .vimrc
+    set visualbell
+    set tabstop=2
+    set autoindent
+    set ic
+
+    :set expandtab
+    :set nowrap # kill wrapping. When looking at very long lined files & need wrapping off.
+
+215) How to find \t tab char.s
+    Use od -c s.file | less # Search by '\\t' entered.
+ 
+216) Playing with ls -ltr, bare by paste
+	ls -tr | paste -
+
+217) Getting vi, vim, and gvim to play nice.
+    * Check "it is" really "vim" running. Distros have vi --> linked to ???
+
+    Inside vim: type ":set" - It will show this.
+    --- Options ---
+   autoindent          readonly            softtabstop=4       ttymouse=xterm2
+   expandtab           ruler               tabstop=4           visualbell
+   ignorecase          scroll=19           ttyfast
+
+   # Solution
+   set ruler # in .vimrc
+
+   set visualbell
+   set tabstop=4
+   set autoindent
+   set ic
+
+   " SuSE versioned.
+   set softtabstop=4
+   set expandtab
+
+   au BufRead  *.py  set tabstop=2 expandtab
+   au BufNewFile *.py set tabstop=2 expandtab
+   au BufEnter *.py set tabstop=2 expandtab
+
+   " set statusline=%<%f%h%m%r%=%l,%c%V\ %P
+   set ruler
+
+218) Scanning WPG graphics for HOP.
+    Goal, to scan, B&W drawings for Mom to use in WPW 7.
+    Scan at 600 DPI or 300 DPI, depending on size.
+    Get from scanner, do in Photo Paint, Auto-Shade the image.
+
+    Click Resample, check 3, first, then the other two. Switch resolution to 300 (both) DPI AND now it is in sync.
+    Save as CPT. Then, resample to 65% (no checking needed), and save as JPG (even though BW) and compress only at 5 percent, smooth at only 2 setting.
+
+    Now, use WPW, Open it, save as, WPG, click "selected image" only and you are done.
+
+219) Using CVS.
+    Windows is a little different than Linux.
+    Basic Linux command apps: cvs, pserver (reading only), ssh tunnelling for security.
+    cvs client, connects to cvs server, to access cvs repository.
+    the various top-level trees (or builds?) are in modules.
+
+    checkout working copy.
+    commit WC.
+    update WC. (to re-get the latest cvs WC!)
+
+    init & import # When you need to create and install (the sources) of a CVS module. You init it and import the sources.
+
+220) Key set alias in .bashrc command.
+    test -e ~/.alias && . ~/.alias
+
+221) bash --rcfile alternateBashrc.rc # start-up
+
+222) Installing ./configure Linux Apps.
+    --prefix=/home/glenrt6 /mersenne # It is weird. You can't say where to
+    # install. You say, where it's parent directory is. 
+
+    # Then, puts things in ./bin ./libexec ./man ./
+    ./configure --prefix=/home/glenrt6/mersenne
+
+223) Setting up gpg
+    gpg --gen-key # Pick default DSA & Elgamal
+    # 1024 bit.
+    # Real Name: Glen G Ritchie
+    # email addr: gmanndsu@yahoo.com
+    # comment: Address 3
+    # Ok: o<>
+
+    # Passphrase: You know.
+    # It calculates & now use it.
+
+    # It calculates & now use it.
+    ./gpg --export -a gmanPublic.txt
+
+    # ======================
+    ./gpg -r 'Glen 2 Ritchie' --export -a >gmanPublic.txt # DIFFERENT???
+    ./gpg -a --export 'Glen 2 Ritchie' >gmanPublic.txt
+    # ======================
+    
+    ./gpg --import laurPublic.txt
+    ./gpg --import aSecretKeyFile_too.txt
+
+    # Never do, unless you know why.
+    ./gpg --export-secret-keys 'Glen Sample Ritchie'
+
+    ./gpg --list-keys
+    ./gpg --list-sigs
+    ./gpg --fingerprint
+    ./gpg --list-secret-keys
+
+    ./gpg -r 'Glen G Ritchie' -a --encrypt a1.out
+    ./gpg -r 'Glen G Ritchie' -o b1.in.asc --decrypt b1.in
+
+    ./gpg -r 'Laurence Finston' -a --encrypt a1.out
+    ./gpg -r 'Laurence Finston' -o b1.in.asc --decrypt b1.in
+
+    # There is a "detailed" process, to "sign" an accepted public key, from another person.
+    # However, they recommend, you need to be in close and "very private" contact to gather the "tell me fingerprint," point. So, sending by email or mail is very poor. (Maybe by phone.)
+    # So, it would appear to be "not so important." Unless, dealing with very valuable communication and expenses can be justified, to communicate so much deeper.
+
+224) Ingenious new "ls" command.
+    ls -R | paste - | tail
+
+225) nmap -v A www.scanhost.com # Check which ports are open & what services 'open.'
+
+226) ssh public-keys
+    glenrt6@perseus:~ 2002:>ssh-keygen (-t ssh-dss)
+    Generating public/private rsa1 key pair.
+    Enter file in which to save the key (/home/glenrt6/.ssh/identity):
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved in /home/glenrt6/.ssh/identity.
+    Your public key has been saved in /home/glenrt6/.ssh/identity.pub.
+    The key fingerprint is:
+    cb:d2:28:94:9b:14:2b:8c:49:87:b7:30:c8:ae:60:88 glenrt6@perseus
+
+227) Riddle: How to "insert" CR with sed, at command line.
+    (1) This is a 'multi-line script" with sed.
+    (2) There are fancier ways, simpler calling formats, or use Perl, or use Gawk. However, I want something "promised" to be on almost any Unix system. Plus, 'sed' is very architecture sensitive. (I'm fairly sure. This is guaranteed to work, almost anywhere!)
+
+    (3) The solution.
+    sed -f fix1.sed input.alter >output.altered # This is how to call sed.
+
+    # End this into a file.
+    s///g
+
+    s//\
+    /g
+
+    # The escape CR - has to specially placed in script.
+    s/looking for/looking\
+     for/g
+
+    s/\]\],/]],
+    /g  # To expand list members in a Python list, to one per line.
+    # Not all on "one big line."
+
+227B) How to kill "^M" (CR) junk with mangled DOS files.
+    Inside vim.
+    :%s/\r//g
+
+228) Using make or gmake with special Makefiles. (Non-standard, I suppose.)
+    gmake -f theMake.make
+    # CORRECTION. This only happened on FreeBSD. It appeared as if the 'gmake' was behaving differently, than 'make.' Yet, in reality, (My Suse and BSD systems) gmake is simple a 'sym link' of make.
+    
+    # So, ignore this tip.
+
+229) A rare (very useful, since MS left it OUT|so badly). Tip
+    explorer /e,""
+    /e,"d:\this Folder\that Folder\People just write stupid sentences anyhow"
+        # The real problem is "making sure" that write a meaningful one!
+
+229B) Fixing MS Win 2000 crapping out "resuming" windows, from previous start-ups.
+    How did this get turned off? One way, IE6 installed by MS - killed it.
+    Registry Key fix:
+    [HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced]
+    "PersistBrowsers"=dword:00000001
+
+    = Some say, Explorer, settings, View Tab, restore windows previous login. Wtv. Not on Roxanna.
+
+230) vim reverse lines in a file.
+    :g/.*/m0
+    :map V :w<enter>:!ispell % <enter>:e!<enter><enter> # Launch ispell on file.
+
+    gvim ui_*.tak
+    :e #1 # Buffer moving.
+    :buffer 4 # ditto.
+
+231) Using screen. (Duplicated in Socrates Head)
+    START-UP
+    -> screen
+    (do not) Hit: <CR> or <ENT>
+    -> Ctrl-a, c
+    --------
+    SWITCH Windows
+    switch win: Ctrl-a, Ctrl-a
+    next win: Ctrl-a, n
+    prev win: Ctrl-a, p
+
+    Win 0: Ctrl-a, 0
+    Win 1: Ctrl-a, 1
+    pick win: Ctrl-a, ~
+    kill win: Ctrl-a, K # To stop the job, on one screen.
+    --------
+    1) Detach: Ctrl-a, d
+    2) then leave the 'terminal'
+    3) to re-attach later: screen -r
+    --------
+    list cmds: Ctrl-a, ?
+    Start/stop 30 second activity monitoring: Ctrl-a, _
+    Start/stop activity monitoring: Ctrl-a, M
+    --------
+    Handling scrollback buffer.
+    Copy & Mark: Ctrl-a, [
+    Paste : Ctrl-a, ]
+    --------
+    Other points:
+    * Problem with screen: Only way to kill a furiously crashing session, can involve killing all screens.
+    * screen has 'file logging' too. Write-in later.
+    --------
+
+232) Using 'webalizer'
+    webalizer -o . /var/logs/httpd/access_log # When ran an non-root, just for myself.
+    # Tip. As root, cat all 43,42,41, .. 4,3,2,1 + original (access.log.1.gz) files > to a single.
+    # Then process above command.
+
+233) New vim commands.
+    Way to place auto-execute inside a text file.
+    vim: set ic # Does this. Rather like the set-mode command in Xemacs.
+
+    :.,$d<CR> # Delete lines from here to end of file.
+    dG # Delete whole buffer contents
+    q1 record macro, ESC q end record.
+
+234) Stripping Latex.
+    delatex, detex, dvi2tty (tty; bad with equations).
+
+235) Deep vim regex:
+    s///g *\\)\\\/ *\\\/\\) *
+    :%s/\(.*\)/ter \1 \1/g # Easy way to "duplicate" a file name. Wish, I had found this, two years ago.
+
+    # More deep vim
+    :%s /^.*\/\([^\/]*\)$/\1/g
+    # Elements: ///g
+    ^ .* $
+    \/
+    [^\/]* # All character not a / slash.
+    # Qur: What if "negated class" applied for more than 1 char? 
+    # I don't know this, yet.
+    \( \)  # with \1
+   
+236) Using "usb" on Linux.
+    1) There seems to be two ways of connecting USB to Linux.
+        Or by the /dev file system?
+    2) Or by the "/proc" file system?
+
+    Perseus form:
+    /bin/mount -w /dev/sda3 /media/usbDrive # Avoid sda1: usually for Cd-rom.
+    !!! CONFUSION - just use sda1 for Perseus.... ????
+    /bin/umount /media/usbDrive
+
+    -w -t usbfs (if usb fs type supported).
+
+    ** Then add said entry to "fstab."
+    /dev/sda3       /media/usbDrive auto            defaults,noauto 0 0
+
+236B) Using usb drive, on Debian Perseus:
+    /bin/mount -t msdos /dev/sda1 /media/usbDrive/
+    # Only used sda1. Because, it showed new in /dev. After pluggin in thumb drive.
+    /bin/umount /media/usbDrive
+    # USE THIS!
+    /bin/mount -t msdos -w /dev/sda1 /media/usbDrive
+
+237) unrar x demo.rar
+
+238) Interesting command to run in /usr - to check on things.
+    find . -mtime -2 -mtime +0 -print 2>/dev/null
+    
+239) CVS commands: Otherwise, see file: 'glenrt6@perseus:~/bin/tmp/stuff6/3d-Aug24 cvs1.hist'.
+    export CVS_RSH=ssh
+    export CVSROOT='anonuser@socrates.gcrnet.net:/home/anonuser/CVSROOT'
+    export CVSROOT='anoncvs@savannah.gnu.org:/cvsroot/3dldf'
+    # Privileged savannah access, below.
+    export CVSROOT='gmanndsu@savannah.gnu.org:/cvsroot/3dldf'
+    export CVSROOT='anonuser@socrates.gcrnet.net:/var/lib/cvs'
+    export CVSROOT=':pserver:anonuser@socrates.gcrnet.net:/var/lib/cvs'
+
+    cvs co wksurvey
+
+    # Faces of CVS usage:
+    1) Unix CLI: cvs command.
+    2) Windows GUI: WinCVS.
+    3) Unix GUI: cervisia, gcvs, lincvs.
+
+    # NOTES
+    * WinCVS is "flawed" for storing binary files. Such as PDF files.
+
+    # GOOD IDEA!!!!!!!!! Backup a safe copy, of the 'CVS target' directories!!!
+    # Starting new repository.
+    # Target is: ~/vent /thx11
+    # Repos. name: thx.
+    cd ~/vent/thx11
+    cvs import -m 'Writing Projects' thx11 a1vender a2release
+
+    # Test, in a 'tmp' directory.
+    cvs co thx11
+
+    # Transfer to parent of 'thx11' & wipe it out.
+    find_l # check for links.
+    rm -r ./thx11
+    # Get it.
+    cvs checkout thx11
+    cd thx11; cd bk04
+
+    # Now, you can work inside it...
+
+    # Adding a new file.
+    vim editFile.txt # And finish.
+    cvs add editFile.txt # include bk04 directory.
+    cvs commit editFile.txt # Say, why added "new."
+
+    # Otherwise, basic operations are:
+    # 1) checkout, when working on other or new system.
+    # 2) update, when "just want to" insure. You have newest copies.
+
+    # Example session, of playing with a junk1.txt file.
+    vim junk1.txt # Create junk file.
+    cvs add junk1.txt
+    cvs commit junk1.txt
+    cvs update junk1.txt # update, to check, if changed, while not looking at server. (Nada.)
+    lss
+    rm junk1.txt
+    cvs update junk1.txt # Retrieve it, even though was lost.
+    lss
+    vim junk1.txt # Alter it, add nonsense.
+    cvs update junk1.txt # Check, if update would 'over-write' newer copy. Nope.
+    lss
+    cat junk1.txt
+    cvs commit junk1.txt # Note: 'add' not needed. Once in repository. Just 'commit' to tell repos. It is new, now.
+    cvs log junk1.txt # shows rlog junk1.txt, like RCS commands.
+
+    # Careful!
+    cvs remove junk1.txt # Cannot be done with directories. Unless, own machine.
+    # Even this, goes to the 'Attic,' anyhow.
+
+    ----------------------- Notes:
+    Yes, it is odd. But, it is about "having" your files mobile.
+    (0) Make an original backup, before tossing, it all away.
+    (1) create by 'import' line. (from inside thx11 dir)
+    (2) you test, to insure it worked.
+    (3) you wipe out, your original dir.
+    (4) go into parent (just above thx11) and retrieve it. 'checkout thx11'.
+
+    (5) when file is updated. You can still 'cvs update testThis.file.' If newer.
+      It doesn't erase it.
+    (5B) Then, 'commit' by cvs commit testThis.file.  
+
+    cvs status theFile.txt # Show version info, one entry (tag?) only.
+    cvs log theFile.txt # Show header info.
+
+    cvs diff -r 1.6 aconstruct.txt # When current check-in r 1.7
+    cvs diff -r 1.5 -r 1.6 aconstruct.txt # Shows the version difference > INSERT text.
+
+239B) sayings about 'cvs'.
+    When running cvs. It is very odd, how some things are done, at certain places.
+    When you checkout, a virgin module. You have to be "above" it's location.
+    When update and commit, you are inside it.
+    When you import, to create a new module. Again, you are above it.
+    Yet, when you 'add' a new directory. It only needs add. Not commit, it seems.
+    Then, when you 'remove' a module. ??? Again, have to be above it? (Usually, I don't do this.
+
+    Otherwise, normally a real CVS is used with multiple users, and multiple releases or sub-projects. I haven't gotten into those situations, yet.
+    However, another "problem" is understanding. How to resolve a revision lock. I've read CVS will only tell you about the issue. Resolving it is up to the CVS admin or powerful users.
+
+239C) Getting an old revision, from cvs.
+    # Go to a temp new dir. Extract it there. 
+    cvs co -r1.15 webpub/pg21_docreatetable.php
+    # Copy over as new, edit it, so real changes. Remove the temp dir.
+    # Then, sync in it, at the top.
+
+240) Making a glossary with Latex.
+    latex glossary.dtx
+    makeindex -s gind.ist glossary
+    makeindex -s gglo.ist -o glossary.gls glossary.glo
+    latex glossary.dtx
+    latex glossary.dtx
+
+    makeindex -s mydoc.ist -t mydoc.glg -o mydoc.gls mydoc.glo # full form.
+    makeglos.pl mydoc.glo # Perl script short-cut.
+
+240B)
+    # Important point, with doing these indexes.
+    Sometimes, for very odd & unknown reasons. It just isn't working.
+    At times, like this. You need to reset the document.
+    i.e. Delete all but the 'masterDoc.latex' files.
+
+    Then, rebuild it, from scratch. If it still isn't working. Could be?
+    1) A problem with broken 'local' class file.
+    2) Problem with file missing, on said system.
+    3) Very deep issue? Whatever.
+
+240C) Making multiple indexes, with Large Letter styled Heads.
+    # Need lshort.ist file in writing directory.
+    # Latex placements
+    \usepackage{multind}
+    \RequirePackage[colorlinks,hyperindex,plainpages=false]{hyperref}
+    \usepackage{hyperlatex}
+
+    \makeindex{general}
+    \makeindex{authors}
+
+    # Latex Preamble
+    # \index{}{}
+    \index{general}{Term One}
+    \index{general}{Term Three} 
+
+    \printindex{general}{General Index}
+    \printindex{authors}{Author Index}
+
+    # ====================
+    latex befPullGRHists.latex
+    makeindex -s lshort.ist -o general.ind general.idx
+    makeindex -s lshort.ist -o authors.ind authors.idx
+    latex befPullGRHists.latex
+    dvips -o befPullGRHists.ps befPullGRHists.dvi; gv befPullGRHists.ps &
+
+241) ispell -v # version 3.x is best. v4.x not so good.
+    spell check.file # lists directly, what it found to stdout.
+
+242) Deeper locate command.
+    locate '*' | wc -l
+    locate '*' | egrep -i 'm.*\.sty' | wc -l
+
+243) Starting xelvis
+    color normal black on white stucco.xpm
+
+244) Using gnuplot (basics)
+    set terminal x11
+    set terminal postscript
+    set output postscript
+    plot sin(x)
+    plot [x= -2:2] x*x-x-1
+    plot [x= -0:100] [-10000: 6000] x*x-x-1
+
+    history 'run10.gpl' # dump history.
+
+245) Sourceforge - dumps my logging.
+    They have chmod g+s all directories. So, writing is blocked.
+    Plus, altered my ownership (gritch5) to 'dummy'.
+    This all happened, Nov. 25 and no notice of change. Typical for Sys Admins.
+
+    chmod g-s tmp # to fix it.
+    # Personal note. Wouldn't you know it. I've told 2 people of my SF site.
+
+246) # Issues with GTK+2.0 for xwPython.
+    wx-config --version
+    gtk-config --version
+    pkg-config gtk+-2.0 --modversion
+
+    export LD_LIBRARY_PATH # no change
+    export PATH + /usr/lib /usr/X11R6/lib # no change
+    
+247) gfontview # Only on Lucy III
+    deltex # Only on Perseus
+    tgif # Only on Perseus
+    lsof # List open files.
+
+ |   7 | shtool            |     23    |    122   | /hpux/Shells             |
+ |   8 | blast             |     23    |      8   | /hpux/X11/Demos          |
+ |  10 | sysmon            |     21    |    586   | /hpux/Sysadmin           |
+ |  11 | pdftohtml         |     21    |    431   | /hpux/PostScript         |
+ |  18 | tusc              |     17    |    446   | /hpux/Sysadmin           |
+ |  19 | latex2rtf         |     16    |    468   | /hpux/Text               |
+
+ All-time Top 50 HP-UX packages transferred from the official archive sites
+
+ |   3 | gtk+              |  16339    |   9862   | /hpux/Gtk/Development    |
+ |   5 | kickstart         |  10840    |     39   | /hpux/Sysadmin           |
+ |   6 | imake             |  10494    |    155   | /hpux/X11/Core           |
+ |   7 | Xaw               |   8717    |    111   | Unavailable              |
+ |  10 | ImageMagick       |   6624    |  20195   | /hpux/X11/Viewers        |
+ |  13 | binutils          |   6025    |  10265   | Unavailable              |
+ |  14 | libpng            |   6022    |   1143   | /hpux/X11/Graphics       |
+ |  27 | libpcap           |   3707    |    490   | /hpux/Networking/Admin   |
+ |  29 | Xaw3d             |   3620    |    938   | /hpux/X11/Toolkits       |
+ |  36 | popper            |   3185    |    210   | /hpux/Networking/Mail    |
+ |  37 | libg++            |   3130    |   1883   | Unavailable              |
+ |  43 | tgif              |   2781    |   1561   | /hpux/X11/Drawing        |
+ |  44 | xtar              |   2759    |   1132   | /hpux/X11/Misc           |
+ |  48 | xanim             |   2664    |    757   | /hpux/X11/Viewers        |
+ |  49 | Xw                |   2663    |   1624   | /hpux/X11/Toolkits       |
+ |  50 | xaster            |   2663    |    310   | /hpux/Games/Arcade       |
+
+248) # New requirement. Protecting from 'rm -r ./*' errors.
+    # Only use deepremove command alias. Plus, it will have a 'are you sure.'
+    # Plus, would like 'check' for find_l. If links present.
+    # (2) To prompt and tell user.
+    # If user is root. Block 'rm -r /' or located in root directory.
+    deepremove ./*
+    
+249) Reseting Perseus 'afterStep'
+    cp -p /usr/share/afterstep/non-configurable/0_background ./
+    cp -p /usr/share/afterstep/non-configurable/0_feel.16bpp ~/GNUstep/Library/AfterStep/non-configurable/
+    # Select 'emacs' feel; for old settings.
+
+250) Using 'advanced tar'.
+    First off, the general switches are 'functions.' x t c
+    Then, there are options. Which as I think are the normal switches.
+    tar x --verbose --bunzip2 --file=gtk+-2.6.0.tar.bz2
+
+251) What could of been wrong?
+    * Gcc compiler, kill -O2 switch ==> -O0.
+    * Perhaps, only runs in X-server locally, not remote on Perseus, as I always am?
+    * Doesn't make sense, having to "manually" path specify 'several header files.' Not good.
+    * From what I could 'glimmer' about tcl/tk core dumps. It could an X-sever issue, font resolution, X resource related. I don't know? But, it gets hairy.
+    * 'core dumps' can be analyzed with 'gdb!'
+    * After numerous 'special in bash' setups. Still, not working, but did flash.
+    * Dependent on kpathsea. Yet, Socrates 'does not' have it fully. R3 only does!
+    * ? Keeping it on 'one version' of tcl/tk - to only use 8.4 / 8.4, and not switch to any 8.3.
+
+252) DELETE LATER!!!
+
+\def\title{\begingroup\titlefont\center}
+\def\endtitle{\endgroup}
+
+252) # Show reboot times, assuming 'wtmp' hasn't been reset by system.
+    last reboot.
+
+253) Listing of how to do spell checking.
+    # From inside vim editors.
+    # Qualify: not 'gvim,' yes 'vim,' not 'xelvis.'
+    V
+    # From CLI bash.
+    ispell -t ui_00.tak # Used mostly.
+    spell -t ui_00.tak | sort -f # New, show mis-spelled words, and direct order
+    spell sample.txt
+    ??? # From inside xemacs.
+
+    # Spelling tracks!
+    spell -t ui_85.tak | uniq >ui_85.spel
+    xless ui_85.spel &
+    # So, above, you create old tracks - of mis-spelled candidates.
+    ispell -t ui_85.tak
+    # Then, you proceed to check them, by hand. Personally, look for new candidates - at the end of list, and repeat.
+
+    # Debian spell usage - non-interactive
+    cat theFileto.Check | ispell -l # (or -a)
+
+254) Indexes of ftp sites.
+    # A file named, 
+    ls-lR.Z, index.txt, or some such.
+
+255) Oddness of ps/pdf: readers, conversion, and "embedded HyperJumps."
+    1: ps can be read by:
+    gv xxx.ps
+    xdvi xxx.ps # ?
+    NO! kdvi xxx.ps 
+
+    2: pdf can be read by:
+    gv xxx.pdf # If made by ps2pdf, or dvipdf(m).
+    acroread xxx.pdf
+    xdvi xxx.pdf # ?
+
+    3: Conversion
+    ps2pdf xxx.ps # SEEMS BEST! at HyperJump version, very nice thumbnails, too!
+    # Requires: hyperref, hyperlatex to be in package preamble.
+    
+    dvipdf xxx # Good for HyperJump version.
+    dvipdfm xxx # Seems to be "poor choice" for HyperJump nice PDF.
+    # Although, preferrable for resume sent by email - clean fonts.
+
+    4: Miscellaneous
+    epstopdf figure.eps
+    
+256) Debian commands
+    dpkg --get-selections | wc -l
+    dpkg -l | head
+    dpkg -s gimp | egrep Version
+    apt-cache show gdb
+    apt-cache search prolog
+    apt-cache 
+
+257) Building Debian images.
+    # As root on socrates.
+    /bin/mount /sciz/glenrt7/sarge-powerpc-1.iso /media/cdloop/ -t iso9660 -o loop=/dev/loop1
+
+    # As g6 on Perseus, get the jigdo lists.
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/cd/jigdo-area/i386
+
+    # CDs: Only
+    i386 ia64 m68k powerpc
+
+    # Move the wget files, to socrates.
+scp -p glenrt6@perseus:~/web08/feb0520/debianJig/cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area/powerpc/*1.jigdo .
+
+scp -p glenrt6@perseus:~/web08/feb0520/debianJig/cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area/powerpc/jigdotemplates/*1.template ./
+
+    # Launch a jigdo-lite, on socrates, against 'cdloop'.
+    jigdo-lite sarge-powerpc-1.jigdo
+    # RIGHT AWAY, it asks 'files to scan.' with (1) for /media/cdloop.
+    1 <enter> # off it builds.
+
+257B) jigdo lists.
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area/i386/*
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area/powerpc/*
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/dvd/jigdo-area/ia64/*
+
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/cd/jigdo-area/i386/*
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/cd/jigdo-area/powerpc/*
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/cd/jigdo-area/ia64/*
+    wget -drc ftp://cdimage.debian.org/pub/cdimage-testing/cd/jigdo-area/m68k/*
+
+258) ftp.cdimage URLs for Debian jigdo. # 2, only finish PowerPC DVD2.
+    ftp://ftp.debian.org/debian/ # 1
+    ftp://mirror.cs.wisc.edu/debian/ # 2
+
+259) Bash Family Commands
+** VPN system logins:
+    hitlucy lu 6
+    actosocr g7
+    plathit gr
+    penehit # unsecured system. gritchie - sample7.
+
+** FTP sites:    
+    ftp.btinet.net
+    www.quinnmc.com
+    www.floatingpointdesigns.com
+    ftp://ftp.debian.org/debian/
+    BAD?! ftp://mirror.mcs.anl.gov
+    # It is "as if." People have dropped Debian? Or the m68k files?
+    
+260) Way to test java jre.
+    javaws  http://www.cs.kent.ac.uk/projects/vital/web-start/start.jnlp
+    # Links to 'vital' JVM Haskel results simulator.
+
+261) Emacs 'two space' conversion.
+    Check these sequences: .b, ?b, !b (most common: b stands for blank.)
+    Plus: .)b, .]b, !)b, ?)
+    Plus? ?]b, !]b
+
+262) A double command
+    vim ls -d x*
+
+263) Making a ISO file, of a CD.
+    cd /cdrom
+    mkisofs -o /home/glenrt7/web09/may0519/workcd2.iso -R ./*
+    # mkisofs -o /home/glenrt7/web09/may0519/workcd2.iso -R -J ./* # J for joliet stated?
+
+264) Windows tip:
+    Way to convert, a FAT32 FS to NTFS. In the /windows /system32 directory, a program called convert.exe
+    convert c: /fs:ntfs # Actually comes with MS Windows. Hmmm. Imagine that, something useful!
+
+265) Dealing with groups & users.
+    * Only the owner, can access / control his own files. (Unless, really weird permissions block it.)
+    * Only the owner of a group can; add or remove other members from the group files, by permissions.
+
+    adduser webman glenrt_group
+    deluser webman glenrt_group
+
+266) The htpasswd command:
+    htpasswd -c trac.htpasswd tracAdmin # to create.
+    # File at /home/webman/public_html, stated inside apache2 conf.d; apache2-config setting file.
+
+267) # SQL ??? scan across query
+    select * from trakker like (EML_ID, '%gr%');
+
+268) Reverse lines of a file, command: tac. (Although, I have a vim invocation, too.)
+    sort -r # Also, in here.
+
+269) Added in 'kon', trying 'ssh://' to SMB connect:
+    ssh://glenrt6@lucy3.gcrnet.net
+
+270) Play an mp3:
+    xmms thesong.mp3
+    noatun thesong.mp3
+
+271) Commonly used networking commands on Perseus:
+    hitlucy lu 6 (tr, fo)
+    actosocr g7 (fo)
+    plathit gr
+    penehit
+    orathit lu o
+    
+    # OLD! ncftp -u quinnadmin www.quinnmc.com
+    ncftp -u admin@quinnmc www.quinnmc.com # Stupid Steves new server. p-Aul-gL-3n.
+    ncftp -u pythagoras ftp.btinet.net
+    ssh -l gradmin www.floatingpointdesigns.com
+    ssh -l gritch5 shell.sourceforge.net
+    ssh -l glenadmin 66.97.240.226 # Joes tesp site.
+    ssh -l gritchie www.cs.ndsu.nodak.edu
+    
+    scp -p gradmin@www.floatingpointdesigns.com:~/*.tgz ./
+    scp -p gradmin@www.floatingpointdesigns.com:/var/log/httpd/* ./
+    scp -p webDesign.php gradmin@www.floatingpointdesigns.com:~/mainwebsite_html/paba
+    scp -p gritch5@shell.sourceforge.net:/home/groups/g/gr/grin/tmp/* ./
+    # Network grabbers: wget, curl, ncftp 'mget -R'
+
+271B) # FPD login accounts.
+    ssh -l gradmin www.floatingpointdesigns.com
+    ssh -l scheme scheme.floatingpointdesigns.com
+    ssh -l blogs blogs.floatingpointdesigns.com
+    ncftp -u xemacs xemacs.floatingpointdesigns.com
+    ssh -l 'glenadmin@trans-european.net' www.trans-european.net
+    scp -p *.html 'glenadmin@trans-european.net'@www.trans-european.net:~/mainwebsite_html # Very confusing quoting!
+
+    # On Windows pscp
+    pscp -p "glenadmin@trans-european.net"@www.trans-european.net:/var/www/html/* .
+    # SSH seems turned-off? Use ncftp
+    ncftp -u glenadmin@trans-european.net trans-european.net
+
+271C) Other uses for ssh: send remote print job - also.
+    cat doc.pdf | ssh serverName lpr
+    
+272) Grabbing from a remote CVS.
+    export CVSROOT=:pserver:anonymous@graphics-muse.com:/cvs/xnotesplus
+    cvs login
+    cvs checkout -r V3_7_0 XNotesPlus
+    cvs logout
+
+273) How to tell mediaWiki - create & edit new page.
+    http://socrates.gcrnet.net/caseman/index.php?title=JAX_ForumHots&action=edit
+    http://socrates.gcrnet.net/caseman/index.php?title=x-----------x&action=edit
+
+274) # plain form - force a passwd.
+    passwd theuser # as root
+
+275) How to backup - wikis & such.
+    a) phpWiki: Status: partial
+        App: * Admin button - do FillZipDump
+        Pbm: Restores - not purely, date-wise
+
+    b) mediaWiki: Status: known - untested
+        App: no feature.
+        = copy LocalSettings.php & "save as file" SQL table dump from phpMyAdmin.
+
+    c) Trac: Status: known - untested & uncertain
+        App: ? feature ?
+        = phpMyAdmin manner?
+
+    d) MT blogs: Status known - untested, yet presumed reliable.
+        App: * Export / Import feature in Admin screens.
+        = Export: save as blog_name.txt
+        = Import: un-tested - so far.
+
+    e) php-Nuts: Status "UNKNOWN" *** "No install / attempted"
+
+    f) Mambo: Status: Unknown - haven't had time to locate, research, or attempt.
+        App: no feature?
+
+    g) phpList: Status "No install / attempted"
+
+    h) phpBB: Status "No install / attempted"
+        App: It has a feature?
+
+    i) Email on web servers: Just saved as showLetter???.html email.
+        Depending upon email account: save as OR save Frame as.
+
+276) Available Meta+A, Meta+E, Meta+G, Meta+H, Meta+I, Meta+J, Meta+K, Meta+M, Meta+O,
+    Meta+Q, Meta+S, Meta+V, Meta+W, Meta+X, and Meta+Z
+
+277) Bash tips:
+    * Alt-. (end of args)
+    
+    function duff
+    {
+      diff -ur "$@"
+    }
+    export -f duff # exports to other "shells"
+
+    cd - # previous dir
+    cd ~- # swap back.
+
+    export CDPATH='.:..:../..:~/links:~:~/projects:/var/www/virtual_hosts' # So, can "just go there" a memory.
 
 278) I don't usually put software keys in this file. Perhaps, in future, place else where?
-
     Nero is rather crucial now, though.
-
     Nero OEM Suite v5.5: Key: 1A20 -0100 -0000 -1531 -6659 -6783
-
     DVD-Video Plug-in: Key: 1A4C -0800 -0000 -2113 -8824 -8984
-
     Nero Ultimate v6.6 release: Key: 1A23 -8806 -7135 -2273 -2367 -8247
-
     
-
     Just received a Nero v7: Free Upgrade - new keys - I presume
-
     "Your Nero 7 Ultra Edition Upgrade serial number is:"
-
     1C82-00MC-19E5-MAAX-4008-7EM9-751A
-
     # spare? 1A23-0609-9030-2414-3264-5075 N-vision.
 
-
-
     JP Software Suite
-
     4NT Key: 8GWRRG-KDXWJ2-2SANGH-RJQ7DD
-
     TC Key: 8GWRRZ-SUB38C-22XF7C-572GV2
 
-
-
     Personal Brain v3.03
-
       s/n 4105-4500-3032-3118
-
     MIB v4.xx (Beta)
-
       F473-75E6-1323-8DDC
-
     MIB v4.5 - Full
-
       X-X-X-8DDC last on 4.5.2.1
-
     MIB v5.0.2.8
-
       4094-5506-3BB8-5B39
 
-
-
     Visual Studio 2005: Standard (free offer)
-
       s/n Key:
-
     Copernic Agent Professional serial: 
-
       s/n CC01-158380-078271 
-
     Copernic Summarizer serial: 
-
       s/n SU01-423477-514371 
-
     Copernic Tracker serial: 
-
       s/n CT00-113679-426271
-
     Stylus Studio Enterprise: (now Sep 2008)
-
     MBKKY-8EHJT-3MJ2P-J342Y
 
-
-
     Serial Numbers: Product Name -- Product Serial
-
     Free Bryce 5.0:  BF50CBD-2324123-MLE
-
     Bryce 5.5?
-
     Bryce 6.0 (6.1; also):  BY60CRD-0006500-FZM
-
     Carrara 5 Pro. Download Version:  RF50CRD-0010199-VQL
-
       Includes Transposer2 Carrara plug-in.
-
     Hexagon 2.1 - Download Version:  HX20CRZ-0028279-CDM
 
-
-
     VectorStyle 2 for Carrara 5:  VE20CRD-0030044-QFX
-
     ArchiTools for Carrara 5 & Carrara 5 Pro:  N3A6-CUXJ-S4HM-L0BM
-
     ShaderStyle for Carrara:  5025-668-43-000301
-
     Advance Pack for Carrara 4: 5PA5-VSUU-J92D-C0AU
 
-
-
     Magna EX v3: EWE3D0-KRV430-C9VJ60-EO2P60-VJK600
-
     Magna Debut Studio: DWE3D0-C9VJ60-98NV60-IY8V20-2TM900
-
     PoserPhysics Plug-in for P6: CP20WRD-11CW-DRL0-300M-EDP1
-
     Poser v5: XF50WCD-42QF-TNX0-809J-UEF9
-
     Poser v6: XF60WCD-78AG-WLL0-806J-UDE6
-
     Poser v7: XF70WCD-0001-94SJ-USS0-700X-TCM3
 
-
-
     Amapi v6.xx: Free Download (odd casing) a3d 60 all 0001 pkjkaqhq FUL
-
     Amapi v7.5: AP75CCD-0001-11LR-BEJ0-700V-PMB6 
-
     Shade Stand 1: SS80WCD-52VB-ZKU0-800Z-TWR7
-
     Shade Stand 2: SS80WCD-91WB-YZH0-900S-JME2
-
     Motion Artist v3.0: 3309-515119-21956
 
-
-
     Carrara 3D Basics 2: CB40CRD-0061870-XWC
-
     TransPoser 2 for Carrara 4 or Carrara 3D Basics 2: TP20CRD-0025415-MWS
-
     Bryce v6.1 #2: BY60CRD-0013025-ZPD 
-
     Motion Artist v4.0: MA40WCD-0001-61BG-UYK0-000H-ZWN4
-
     Rage Artist:  8U5R35SLL2NX9GKRK4CN
 
-
-
     CADstyle for Carrara Studio 3 & Carrara 4 Standard
-
     S/N TC10CRD-0900028-TCR
-
     Grid (from DAZ): S/N EG10CRD-0010031-TUJ
-
     Carrara 5 Pro. Download Version #2:  RF50CRD-0010976-BSV
-
       Includes Transposer2 Carrara plug-in.
-
     Acronis True Image 7.0: s/n TBZPD-ZV86C-HHZNZ-CWR3S-BF254
 
-
-
     DAZ Studio v1.7 - requires S/N code, now. s/n DS17CRD-0019691-QFN
-
     = new JP Suite (4NT 8.0, Take Command 8.0, TCI 2.0)
-
     User Name:         Glen Ritchie - 1 System License # Have to enter 1 Sys Licn (stupid!!!)
-
     4NT Key:           A88PSLY-TVGTJ-XW9LN-CYXE8-7J88S-MXMS4-ZQCL9
-
     Take Command Key:  A88PS3L-4L4BZ-YM94F-QBGJM-QYFSX-FZ7H6-MNCH3
-
     TCI Key:           A88PSKR-TSEK9-S5LVH-8VHRN-J5H9A-XAJSA-AR4GE
 
-
-
     Last Free (of line) Movable Type v3.35 bloging software
-
     Update key: DA11320EFB3C44F1
-
     BSpot - other account, have another Update key.
-
     Ditto: Update key: DA11320EFB3C44F1
-
     FPD Key: DA11320EFB3C44F1
-
     BSpot Key: DA11320EFB3C44F1 on bspot, too???  Ukn: ...
-
-
 
     Carrara 6 Pro: RF60CRD-0000128-KLH s/n
 
-
-
     OmniPage [1]: E709A-K00-NCX4-3JZQ-2Y 
-
     PaperPort Std [1]: 6889A-K00-1462-GFY1-YK
-
     MediaRecover (value?) [1]: 00K5YK-Y6M2PA-8PMFA0-T89K9H
 
-
-
     OmniPage [2]: E709A-K00-M6K0-GT1H-ET
-
     PaperPort Std [2]: 6809Z-K00-PN33-MZRM-8E
-
     MediaRecover (value?) [2]: 00K5YK-Y6M2PA-8PMFA0-T89K9H 
 
-
-
     Carrara 3D Express: s/n CE10CRD-0005818-XQP
-
     Omni Page Pro v6: ???
-
     PDF Converter Pro v6: ???
-
-
 
     SmartDraw 2010: SD-00-637062-0001-8603-00000-B0-75683
 
-
-
 278B) Software List:
-
     Delphi 2006: $390
-
     M & Maple: $150? + $150?
-
     Personal Brain: $80
-
     BDS 2006 Developer System: $160
-
     Bryce v5.5: $30 (newest now is v6. Wtv.)
-
     Copernic Suite: $120 + $11 (CD)
 
-
-
     Magna EX v4: CE4WE0-0D03F5-E46C72-0AA714-55C666
-
     Anime Studio Pro v5.6: ZP50WCD-0001-00JT-AGW0-201X-XRD4
-
     ArtRage Deluxe v2.5 (new): 6DVPK2SL5ERR6XLWQ4NH
-
     GroBoto: Braid Art: GWR2-TSFU-5EY4-Z5CE-PPHW
 
-
-
     SmartDraw 2009 #1: 
-
      Your login name (e-mail address) is: glnritchie@hotmail.com
-
      Your password is: W22P3H
-
      Your order number is: 590364
-
      Your serial number(s): SD-00-590364-0001-8003-00000-A0-72994
-
      SmartDraw Maintenance and Premium Support Expires: 12/13/2009
-
     SmartDraw 2009 #2: 
-
       SD-00-590366-0001-8003-00000-A0-24494
-
     Office 2007: Home and Student
-
       QW6M2-2VDCQ-DCM4V-T7XC2-GMXVB - Product Key FPP.
 
-
-
 278C) Software List:    
-
     Serial Numbers: Product Name -- Product Serial
-
     ProgeCAD 2007 Professional s/n: 627PRO-837620-848854
-
     EML: g--r--ie@ HT.
-
     Blind Sending on Rox.: 05005- 30550 -49053 -30480 -53 (request code)
 
-
-
     Options (deeper page)
-
     - I'm transfering my license from another PC
-
     - I've reinstalled this pc and I've reinstalled it.
-
     - I uninstall and then I install progeCAD 2007 Pro
 
-
-
     URL: http://www.progesoft.com/register/register.asp?name=Glen&surname=Ritchie&company=None&type=7PR&vernum=7.0.3&lang=eng&pcser=05005-30550-49053-05505-30480-53&serialn=627PRO-837620-848854&uninstall=
-
   * Take Command Version 9.0
-
   User Name: Glen Ritchie 2 - 1 System License
-
   Take Command Key: MPK3DUU-9WVQU-QD5QV-CW935-WH754-5K9BH-PREUU
-
   CDS Corporate: (zapped v3.1) DS02-041824-491871
-
   Buzan's iMindMap v2.2.3: D4VWB-MAP6R-8HC9J-XFH3U-CNKVG
-
   iMindMap Ultimate Serial Number v3.02: PQ3KJ-QXFHD-4WBTM-FHDUC-NKVWT
-
   iMindMap Ultimate Serial Number v4.xx: HG9P3-GWE9B-JXNWY-R8QHD-43UGB
 
-
-
   CDS Corporate: 6qoYnqa0Q6yZBdxS9xrtVRZ4AZc6ORXOwXFJL2LwjIiEZh1KHFuBf4Y0o1xcxN2FWpgh24CoYs3+968Trk9kcs0TkJWI5KnZ
-
   ** CDS Corporate (new 2009): 5AxHIQh7pOANn7qOFveT4popvxCZoxCkHG0KnAA3dLXpK112sPgE0FIqOX9FNzkaivKkuY7TI1xyDsZXrjQYjH2pD1CYm
-
   MathType MTE v6.5: MTWE650-006203-UGW59
 
-
-
   progeCad 2009 USB: s/n F21PRO-465725-861082
-
   Note: ** Getting to work on a Win2000 PC. Need 630k dbghelp.dll file from a WinXP PC. Just put in progreSOFT directory, is good enough.
 
-
-
   Maple 13: homeuse JFM8HEWSUVCMC6QK (now used May-03 2009)
-
     other use standalone PXNS4SJCWSBUYN5P
-
   Maple 14: homeuse 8GKQ5JP5BYATSVKG, HOMEUSE FM4USLM2NJ5YNLJD
 
-
-
 ____NETWORK_____        ___STANDALONE___        ____HOMEUSE_____
-
 ________________        PXNS4SJCWSBUYN5P        JFM8HEWSUVCMC6QK
-
 SUPPORT
 
-
-
 278D) Serial Numbers
-
     MindManager Pro v8: 2B2JN-YR5EY-H84DR-AS9EK-J34FW (mind manager)
-
     JCVGantt Pro v3: JCV30-47WK-2C61-YCH3-9CIP
 
-
-
     ZoneAlarm Internet Security 2010 (from Tom)
-
     m1e0c-j0h9p-4x666-u6t1wu-u5njc0 (version 9.1.008.000)
+
+279) FPD blog egrep bash lines:
+    egrep -i 'linuxr' access.log | egrep -v '\-217' | egrep -i 'linuxr\/2005' | cut --b=1-120
+    egrep -i 'nullx' access.log | egrep -v '\-217' | egrep -i 'nullx\/2005' | cut --b=1-120
+
+280) Writing Project publishing scripts.
+    ./runTav.sh; formPy.py --j
+    ./runTav.sh; formPy.py --j --q
+
+    # nano 'personalized' shell running commands
+    bkedit.sh
+    ./runTav.sh; nanoPy.py --j
+    ./runTav.sh; nanoPy.py --j --q
+    sdeep 3; xemacs nano_2_0030.gram &
+    ./shwDaily.sh
+    gvim nanoGrams.txt
+    gmake -f tavMakefile clean # When you 'alter the C.V. grammar.'
+
+    # custom Files: nano_2_0030.gram, nanoVox.py, nanoPy.py, nanoGrams.txt
+
+281) Astronomy programs:
+    xplanet, celestia, kstar: with 130,000 pictures?, xephem.
+
+282) Problem with acroread.
+    It seems 'various GNU made PDF' files will cause - a sometimes X11 windows lockup.
+    Counter-solution? Use gpdf, kpdf, xpdf???
+
+283) List of free Sun software.
+
+284) xscreensaver-command --prefs # set screen saver preferences
+
+285) Chandler check-out
+    svn checkout http://svn.osafoundation.org/chandler/trunk/chandler chandler
+
+286) Type javascript into browser address bar.
+    javascript: alert(navigator.userAgent)
+
+287) ldap search command.
+    ldapsearch uid=*
+
+288) Evolution 2.0 --> connects to GroupWise server feature.
+
+289) How to 'downgrade' a Debian package.
+    dpkg -i the-package-a-bit-older-2.30-3.deb
+    # One time, I did this for w3c-markup-validator. I included the full path: /var/cache/apt/archives/the-...
+    # It shouldn't matter!
+    dpkg -i /var/cache/apt/archives/libconfig-general-perl_2.30-1_all.deb # Real example.
+
+290) The bt (bit-tornado?) command.
+    btdownloadcurses http://www.ttcsweb.org/ttcsosswincd.torrent
+
+291) Setting up Ural Project on savannah.gnu.org
+    = also: sv.gnu.org, sv.nongnu.org
+    = Needed to "logon" sv. gmanndsu @ known PW.
+    = Then, setup of CVS keys. (Changed since 2 years ago!)
+    = Pages Glanced: http://plato.gcrnet.net/~webman/fpdsite/grintool/Ural/index.html
+    Plato CVS: ~/bin/tmp/fpdsite/grintool/Ural
+
+    = export declares.
+    echo $CVS_RSH # Perseus Ok, by default, on this.
+    ssh
+    echo $CVSROOT
+    gmanndsu@cvs.savannah.nongnu.org:/web/ural  # NOTE! web-SOURCES !!!
+    == SV.gnu.org blurbs add -z3 -d gmanndsu
+    NORMALLY: anonuser@socrates.gcrnet.net:/var/lib/cvs
+    
+    Ural code CVS:
+    cvs -z3 -d gmanndsu@cvs.savannah.gnu.org:/sources/ural
+
+    = Had to get my 'public key' and establish a pass-phrase (on Perseus).
+    Go to 'my account', 'configure keys, Run,
+    ssh-keygen -t dsa # Enter pass-phrase, you'll use.
+    Let it store in ~/.ssh/id_dsa.pub
+    # Then copy and paste to sv.gnu.org web page form. Wait about an hour (for cron), to sync.
+
+    = Pages Glanced: http://cvs.savannah.gnu.org/viewcvs/?root=Web#dirlist
+    = Pages Glanced: (web master guidelines) *** http://www.gnu.org/server/standards/README.html
+    = Pages Glanced: http://www.gnu.org/server/fsf-html-style-sheet.html
+    
+    = Pages Glanced: http://www.nongnu.org/ural/  # URAL's location!
+    = Pages Glanced: 
+    export CVSROOT='gmanndsu@cvs.savannah.nongnu.org:/web/ural'
+    export CVSROOT='gmanndsu@cvs.savannah.nongnu.org:/sources/ural'
+
+292) There is a way with JScript to 'make a page' show all it's links. See feb0626 directory.
+
+293) Ural 'editing string' vim.
+    # Hit the ':' key, first.
+    %s/http:\/\/plato.gcrnet.net\/ural/\/ural/g
+    ## %s/  http:\/\/plato.gcrnet.net\/ural   /   \/ural  /g
+    
+294) Reading on SVN - subversion
+    * SourceForge should have SVN, by April 2006?
+    * Although, "you can't" truly delete something, once entered.
+    * SVN is not like CVS. CVS is "much more" file by file tracking.
+    ** SVN is about 'trees', keeping releases, working "unix commands" via it for it's SVN files (cat, copy, move, and more!), and is really for "moving files" all over.
+    * SVN: Really lets you work on files, without "even" having to network connect to the server hosted on.
+    * Standard setup directories are: trunk, branches, tags.
+
+    * Not like CVS, SVN is 'really about' "you can place" the SVN repository wherever you want on the server. So, unlike CVS, where everything is at /var/lib/cvs [as I do with my Debian installs]. SVN is more about - when you create it - and 'import' it. It should (this seems the valid way) be placed, just "wherever" you have rights, to put it.
+    * OSAF uses subversion.
+    * Notes from the redbean book: (a) the /trunk = where the 'featured branch' is stored, by convention. (ie, The newest / current developer version.)
+    ** (b) The process of moving branches, is how an 'assembled' released (with source code / or not) distribution is deliverd. (c) First, a /trunk is 'copy'-ied to /branches/release-1.0. (d) This shows it is being prepared for release. (d) Then, things are frozen, test-suites are prepared for, applied, and hopefully passed. (e) A successful branch gets 'move' [or is it copy??? Wtv.] to /tags/release-1.0.1 (This is the release branch.)
+    ** At that point, it is a public release branch, assuming approved and such.
+
+    * The beauty of SVN, is 'all these files' are copies through and through. Only when changed, deleted, added, or seriously altered; does it 'utterly' transform things beyond their starting 'all common' source bases.
+    * So, even if, I'm working with Ural, and I want to "remold" it to a new purpose? I simply 'copy' (I'm rusty on this. Still in training.) it to a new 'private branch' from the (featured branch = aka development main folder) and work on that.
+
+    == My only concern is, I wish "I had" as nice a SVN client, as the Windows one 'TortoiseSVN' is. (It even has a spell checker, built-in!)
+
+294B) # Using svn.
+    There seems to be 'several ways' to connect to subversion. Which, I'll have to find the many ways.
+    svn co svn+ssh://gritchie@socrates.gcrnet.net:/home/gritchie/svnMisc
+    svn co http://???
+    svn co svn+ssh://gritchie@socrates.gcrnet.net/home/gritchie/svnMisc # No 2nd colon form.
+
+    # Other machine tapping.
+    svn co svn+ssh://gritchie@socrates.gcrnet.net/home/gritchie/svnMisc 
+    cd svnMisc
+    svn mkdir releases trunks tags
+    cd trunks # Main data directory.
+    touch README1 README2 README3
+    svn add README* # Prompted for SVN message, no PW asking yet.
+    svn commit README* # PW prompted twice and then stored in subversion repository.
+
+    # More details.
+    - Using Windows with generic DNS; You 'cannot use' socrates.gcrnet.net. Have to spell out
+      as 192.168.0.202.
+    - remote SVN: add command works without server touching.
+    ? Does commit "fall back" later with commit performed.
+
+    # Working svn, on Socrates access by axman.
+    svn checkout svn+ssh://axman@so.gcrnet.net:/home/axman/svnMisc # on Socrates
+    svn checkout svn+ssh://axman@so.gcrnet.net/home/axman/svnMisc # by network
+    svn checkout svn+ssh://axman@192.168.0.200:/home/axman/svnMisc # Windows2000 networked
+
+    socrates.gcrnet.net/cgi-bin/viewcvs.cgi # ViewCVS page for Socrates.
+
+    # Deep svn special CLI command.
+    ssapp commit `find_gS 'doDrop*' | egrep 'doDropPs$'`
+
+    # Or? Build your list, by
+    find_gS 'g*.txt' >out1.txt
+    find_gS 'g*.bak' >>out1.txt
+    ssapp commit `cat out1.txt`
+
+    # Odd issue: Making a binary file; added as binary.
+    # Issue with propset. You can show it by proplist.
+    # cvs has a -kb option, to force binary grabbing. I presume with Svn. It doesn't matter. However, some files are known binary & to be extra safe, if valuable. I prefer to see, added as binary.
+    ssapp proplist *.bin
+    ssapp propset svn:mime-type 'application/octet-stream' afile_g.bin
+
+295) Brandon recommends:
+    tkdiff,  gvimdiff (gvim -d). # For meld or diff file viewers.
+
+296) Using imagemagick to convert graphics on CLI
+    convert -size 120x120 dscn0005.jpg -resize 120x120 +profile "*" thumb0005.jpg
+
+297) tightVNC and Windows systems.
+    ./vncviewer odysseus::5905 # Special ports
+    ./vncviewer # quatrus
+
+298) Problems with getting X11 to work.
+    = Edit /etc/ssh /sshd_config file.
+    Set X11Forwarding yes # no turns it off.
+
+    Besides, setting permission in .xinitrc with xhost +192...122
+    Also, use:
+    ssh -X -l g7 lucyiii # The ssh Protocol 2 PC; require this.
+    
+    # Note: $DISPLAY shows as localhost:10.0
+    Don't change DISPLAY & just use this with "ssh -X" option.
+
+299) # The way to text search PDFs. (I've been looking for this, for years.)
+    pdftotext afile.pdf # Makes a afile.txt; is works - most the time.
+    # Then, you can egrep the text file.
+    
+300) Using svnadmin
+    svnadmin recover /home/axman/svnMisc
+
+    svnadmin dump /home/axman/svnMisc > dumpImage.svn
+    rm -Rf svnMisc
+    svnadmin create /home/axman/svnMisc --fs-type=fsfs
+    svnadmin load /home/axman/svnMisc < dumpImage.svn
+
+300B) More details on subversion
+    (*) It is quite powerful with merging 'commits' from several people. However, if it is a binary file? That doesn't happen at all & forces you to manually intervene. (Makes sense.)
+    (*) I've been having trouble with ssapp & ssapp copy commands. I think? you "have to" perform them above it's root node. Like, why with CVS, when I want older revisions. I have to svn -r 1.3 ... # While right on top of the CVSROOT directory.
+
+    (*) svn commands with 'anything' pertaining to directories, is sensitive. So much so, if directories are involved. It appears, you have to commit their movements, single by single dir-named.
+
+    (*) svn merge # is the magic command. Although, if "really different" than copy over & svn update?
+    (*) svn experiment; If a parent has filex.txt & you copy it to child1. They are the same file. However, if "you just edit" filex.txt in the parent. Does it "reflect the same" in the svn copy child1? Ans: No. It is a different 'versioned file' technically.
+
+300C)    # Doesn't "clone SVN" dir1 to dir2?
+    ssapp copy ../essy17 ./templateMdoc
+
+    # Question: When I "long-hand SS copied" dir1/file1 to dir2/file1.
+    # SVN records "file copied." However, this second time, I copy dir1 to dir2, 
+    # and "I'm surprised" there is no mention of "copied?"  Should I be?? Hmmm.
+
+300D) Using svn merge command.
+    # Perhaps, there is a better way?
+    # However, I just use it, this way. When there is a very special "large set" of change-overs & merging from two (or more) svn folders, for making a large united set.
+    # At least, this way, there is a full backup of everything, down the road. if I have to dig into it.
+    # Otherwise, when dealing with Delphi 7 dirs. I consider the DCU files, scrapable, and don't save, until "very last commit," to enforce full image preserved.
+
+    = dir1 (plate10)
+    = dir2 (ddw10/branch)
+
+    = Create dir2 in ddw10
+    = svn version copy files of dir1 to dir2.
+    = svn verion copy 'selected extra' files of ddw into dir2.
+    = Drop all DCU - object files. Since, just binary junk, and Delphi should always fully rebuild them, anyhow.
+    = Then, process merging in D7, in dir2.
+
+    = Verify, as best as can, is perfected, debug, and complete.
+    = Getting ready to "merge" into dir1. # Note: Ran on Windows using TortoiseSVN client, for simpler usage, and fancier control.
+    = Then, try it.
+
+    = First, run 'dry run.'
+    = Then, 'any extra new files' will cause it to fail.
+    = ++ So, add those manually to dir1, from dir2.
+    = Then, go to doing the merge command. (I don't know, the ssapp merge format. PT: I'll have to do this, later, in my playSVN.)
+    = Do 'dry run' again.
+    = Then, hopefully, no error messages. (The 'skipped missing target' doesn't happen. If it does?, then it doen't fully commit.)
+
+    = Note: (I don't understand, this yet. Wtv.) The svnBook notes say, 'it isn't completed - the merge, until you do a commit. I don't get that. Perhaps, Tortoise ran this for me? Wtv.
+    = However, after the (no errors) merge. (1) Deleted all DCUs. (2) Started Delphi 7. (3) Force rebuild all & ran the application, to check it. (4) Besides, verifying, the 'added units' of dir2, are here now.
+    = So, a few edits still occurred, and then a last CI. Labeling it as golden plate11, even though staying with plate10 (dir1) directory.
+
+    Important Tip: Before doing the merge. Look for "dir2 app name" comments. You should 'clear those' or mask them as template-something, for final merge in the new dir1.
+    ** Plus, 'just open' the app (Delphi) and look for 'project file' settings. The name of the app, help file titles, and such.
+
+    == ORDER: Be in the working directory (dir1), when you run the 'merge' command. 
+    = Selected the directory (not files, in list pright pane).
+    == Run the merge command.
+    == From: (tort) set to dir2.
+    == To: (tort) set to the working copy; dir1.
+    == Try dy run first. It'll make you PSWD two or thre times.
+
+    *** Note on Subversion: After it performs the 'merge' and no errors. Question: Is this a good / solid re-written directory of source files???
+    = Point being, SVN doesn't make any claims - it works or works right with Wtv. code system. Point: It is up to the prger to verify, it work, the system is air tight solid, and 'the transition" 100% solid. Or 'you should' revalidate all tests, look for problems, and such.
+
+300E) # When copying the plate10 to new project.
+    = Delete the svnNotes.txt file, not needed in new apps.
+
+301) How to scope out which files named by a wildcard CLI.
+    echo someFunky*
+    echo \#*
+
+302) Three basic ways to run gawk. # All CLI only.
+    gawk '{ print "one for every line; this dupped" }' test1.txt
+    gawk '{ print }' test1.txt
+    gawk 'BEGIN { print "Hi again" }' # Only option not requiring a file.
+    # Although, way 3 would "work on standard input, if you wanted it to.
+
+    gawk -f script1.awk test2.txt
+    perl -lane ???
+
+302B) Filter with perl.
+    #!/usr/bin/perl
+
+    while(<STDIN>){
+    s/\"Field \d+=//g;
+    s/\"\"/"/g;
+    print;
+    }
+
+303) How to use mTavvox.sh & showTavvox.sh
+    ./mTavvox.sh uk_22 1 && xdvi -bg white -geometry 970x650 uk_22.dvi &
+    # Why have it defined locally? Ans: WPs can have 'different particular' options, to build themselves, make varying forms of output PS, and so on.
+    # Really sort of a customization feature.
+
+    showTavcenter.sh
+    showTavcenter.sh --bare
+    showTavcenter.sh --bare --report
+
+    ./mTavvox.sh uk_60 && takVox.py uk_60.tak uk_60.latex hiss_2_0021.gram
+    do1 uk_60 && do2 uk_60 && ps2pdf uk_60.ps && cp -p uk_60.pdf ~/
+
+304) Ways of piping:
+    /bin/ls | cat
+    tar cf - . | (cd /home/glenrt6; tar xf -) # The FreeBSD tar copy command.
+    tar cfz atar.tar `cat manualFile.list`
+    cat afile.txt | cat
+    find -exec {} ?????
+
+305) Special settings for 'windows compatible' CD-R burning, of files.
+    = (def) no multi-session (just one burn)
+    = Generate RockRidge extensions
+    = Generate Joliet extensions
+    = Allow 103 char. names
+    = Allow 31 char. names
+    = (def) ISO level Setting: 2
+    
+306) Productivity Idea:
+    = On Acrobat: Page Open - full width.
+    = Custom color: light light purple or yellow.
+
+307) history stats script
+    history | awk '{print $2}' | awk 'BEGIN {FS="|"} {print $1}' | sort | uniq  -c | sort -r
+    # Add | tail -20
+
+308) # netcat command: Way to pipe data over a network.
+    nc, and cryptcat.
+
+309) Plain text convert freemind MM files.
+    sed -e "s/ \(CREATED\|MODIFIED\|ID\|POSITION\|FOLDED\)=\"[0-9a-zA-Z_]*\"//g" YourFileName.mm > NewFileName.xml
+
+310) Tracking "windows large" files errors.
+    What kinds of problems - can happen?
+    (*) pscp fails on 4.2 Gig "max file" size error. 
+      ie, You cannot use it to move an entire DVD.iso.
+    (*) zkzip "is flawed" for over 2.1 Gig size archives
+      Solution: Use 7-zip!!!
+
+    (*) #3: Win2000 DOS / 4NT prompt; "must have" a refuse to handle files over 3.2 Gig limit. Perform copy /b ss+ss+ss /b out.iso; in plain DOS prompt shell, only. Then, it disappears to DOS-16 based programs.  
+
+    (*) Tracings:
+    = Verify .zip archive after making, on PC made. /test
+    = Compute mdx on Windows, transfer to Linux, and verify with rdsig *.md5
+    = "sample run" full expand, on Linux; CONDITION before deleting 
+      Windows "real files."
+    = Continue network transfering, as needed, and "verify" matching MD5 sig.s.
+
+310B) If bad CD / DVD issues, with reading disc.
+    = (1) Don't panic, get super angry, or "presume it is lost" right away.
+
+    = (2) Questions: One, was it "truly burnt" correctly, originally? If you don't test MD5's, as I do. You can't answer this. (ie. Lots of people, presume burns [even when read verified by burning software] [Note2: That has failed on me, with this laptop!] -- are truly performed completely & accurately. DOES NOT mean, it happened, or "really worked.")
+    = (2) Next: Try restoring / reading on another computer / drive recorder.
+    = Next: "see if?" you can read it "at slow speed." Years ago, this made a major difference for me, with old factory recorded CD discs.
+    = Next: Try different OS. Windows reading a DVD is very choatic. Linux is "far more" just streams the data - working. Seems purer reading program.
+
+    = I've read - scratches, smudges, or dirt can cause faulty read issues. Cleaning and looking at the surface, always a good idea.
+    = 7ZIP Magic Line:
+    \progra~1 \zip7\7-zip \7z a -tzip -r0 \oakbar\afileNAME *.pdf
+
+310C) Steps Breakdown:
+    # The problem is "moving a 4.2 Gig file" to Windows (even 2000) from Linux.
+    # Or "even just" 3.2 Gig or 2.1 Gig over sized.
+    (1) Note: Using zkzip for over 2 Gig archives - do not do! 
+    * Use 7-Zip in Explorer.
+
+    (2) Need "double size" space free on Linux partition to split, debImage.iso
+    (3) Split the ISO, using 1 Gig slices is Ok.
+    (4) Open (plain!) Dos Prompt on Win 2000. (Not 4NT!)
+    (5) Transfer it over, with a computed 'whole file' MD5.
+    scp -p g@lucy3:/home/g/blank/x* .
+
+    (6) Once, on Windows in Dos Prompt.
+    copy /b xaa+xab+ xae aimage.iso
+    (7) Next, "need GUI md5" win32 app. (Freeware from TSoft.) to compute md5.
+    Create md5, it will "be left in clip board" after computed.
+
+    (8) Verify md5 manually. Note: Hopefully, in time, I'll start replacing parts of this process.
+    (9) Delete the x* files & use Nero to burn image.
+    * Note: Otherwise, "it is possible" the 4.2 image file - will not list in plain Dos Prompt listing. Don't be alarmed. I presumed a Dos-16 with Win NT FS issue. Wtv.
+    (10) Using windows Explorer & double click, on aimage.iso file. Nero Burn image DVD utility will pop-up, and proceed.
+    
+311) # Burning "Windows compatible" plain file archives with k3b.
+    Apps in 'apps' directory.
+    license files, install notes, user info in plain text - root dir.
+
+    Click burn:
+    * Writing - on the fly
+    * Sessions: no multi-sessions
+    * Volume Description: name - Modeling Masters Two
+    * Filesystem: Generate RockRidge & Joliet extensions
+    * Advanced: Allow 103 Joliet, 31 char names, ???
+
+312) Pswords of qmc.
+    pizza morons site: G-0-0-d p-1-z-z-a.
+    master admin: p-A-u-l g-L-3-n
+    spammer? 2-u-1-n-n-a-v-m
+
+313) Advanced use of vim. Challenge take file with several lines, ending noise with /tabs chars and merge to one long line, for dpkg command.
+    A: Use vim, :%s/install$//g
+      :%s/\t//g
+      :%s/$/ /g
+      
+    B: Record the merging macro.
+      Ctrl-Q 1: :.,+j <hit enter!>
+      # Count number of lines.
+      100 @ 1 - will power repeat this macro.
+
+314) Using cvs2svn on Socrates old to new SVN.
+    cvs2svn --exclude=a1release --exclude=a2vendor -s /home/glenrt7/public_html/c4svn /var/lib/cvs
+    # Note: Created lots of 'dups?' under branches & tags. Pulled later.
+
+314B) Windows Dir Names:
+    EVN shares
+    link D
+    svnDcases
+    svnRython
+
+    svnWording
+    theMIB
+    tspdata
+
+pathings: 
+    axman@socrates /home/axman/theMIB
+    axman@socrates /home/axman/svnDcases
+    axman@socrates /mnt/c/axman/theMIB (tearMD) (linkD)
+
+using viewcvs:
+    There are still some issues. Most Important - don't trust theMIB pull-down, use svn5mib - instead.
+
+315) How to "put label" on konsole term windows.
+    titlex # SS.
+
+316) Tip of useful command, for Windows PC. Start CLI shell as admin without logging off user.
+    runas /env /u:admin cmd
+    
+317) Problems with dupping my Music CDs.
+Part 1:
+    = You have to 'rip off' the audio tracks. I prefer to WAV only format, no MP3 stuff.
+    = TRICKY BIT: How do you rip the audio off!
+
+    = Nero 6: Run Nero Express 6 (Nero OEM, then Nero Express)
+    = Click 'more' button.
+    = Select save tracks, option!
+    ** Output Format: PCM Wav File (Windows) format.
+    ** Pick your location to save WAV files.
+    ** Ensure you have enough disk space, to do it.
+    
+    ** Plus, 'options' button, for more features.
+    *** Plus, output format - has a settings button, too. Ok, wtv.
+
+    ** One difficult track, at CD end: Solution: Set read speed down to 4x.
+    + Symptom: The CD stopped reading on last track. PC in non-stop loop getting it. Hit cancel & 90 sec.s later, stopped. Then, re-try.
+    + However, on some occasions, I have had to "force hard boot" or turn computer off. I don't like doing Windows, this way. But, when you have to? You have to.
+
+    = Normally, just click 'Go' and rip off the audio tracks. This is the hardest problem, especially with ``sub-quality,' made to create problems, for computer audio players & dupping. Whatever, the music industry is just full of jackassES! Who cares. Learn your business & dazzle your customers, not insult / injury.
+    == You don't own the music! You never did! The artist performing it, only does.
+
+    = Footnote: Option Features: Jitter correction, Remove silence, Automatically generate an MU3 playlist of stored audio tracks, Read speed: 32x to 4x & Maximum.
+
+Part 2:
+    = Using Nero 7.
+    = Make audio CD.
+    = Simple: Bring in the WAV tracks.
+    ** un-checked: normalize all audio files. (Used on Mozart CD compilation)
+    ** Check: No pause between tracks. (Reason: CD burners - always put an odd repeat, between audio tracks. Doesn't cut like, real audio CD does. Note2: Doesn't always work. Back live tracks with 'half-songs' spread across tracks, fault it. Wtv.)
+    
+318) # Settings using phpMyAdmin Export of FPD gr_-_btype DB.
+    = click: Select all (tables)
+    = round select: SQL
+    = check: Save as file
+    Compression (none)
+    = SQL Options::
+    = Structure: check: add drop table, add if not exists, add auto_increment, enclose table & field names.
+    = Sql export compatibility: ANSI
+    = Data::
+    = check: complete inserts, extended inserts, use hexa-dec for binary fields.
+    -- check: (add!) + use delayed inserts.
+    = export type: INSERT
+    GO.
+
+    = Extras: add 'if not exists'
+    - un-check table name in backquotes.
+
+    = Curse that Steve! His 'avm phpmyadmin' spits out backups, in wrong format! How lame is that!!!
+    Trick is: table names and field names - 'must be' in ` backquotes and not double quotes.
+    Ergo, you end up "manually hacking" .,999s///g edits.
+
+    = New Wrinkle: Several mt-tables need 'auto_increment' option, turned added.
+    -- Ans: I had to manually edit the table structure & put it into effect.
+    -- Res: Some sort of syntax compatibility issue, between AVM dumb system and my run SQL phpmyadmin. Wtv.
+
+319) Writing bash SS (shell script) files.
+    # declare var, as such
+    AVAR=sss
+    AVAR='sdd/sdf' # no spaces
+    # symbols needing escaping
+    & % 
+    # if fi form
+    # case esac form
+
+320) MM printing to Tabloid:
+    A: Print Scaling: XXX Check: Fit to one page.
+    B: Enter page setup, make tabloid, change margins to 0.5 all around.
+    C: Then, print, select Distiller, using "Print" setting - 1200 DIP Ok,
+    == Click advanced tab, tabloid, Scaling 110%.
+    D: Then, print and experiment with. Of course, amount of play and manually finding sweet spot are the problems. Wtv.
+
+321) Fixing MIB - personal brain.
+    The oddest thing happened. Somehow, after one fresh running - no matter what you do. It is locked with "help topics" dialog window - always appearing.
+    Even when, it first happened. Thought it was a Shift key pbm - all so frequent on this laptop.
+
+    = Final solution: Pulled off all lower screens (if necessary? don't know), then. Starting playing with the help system. Pressing Shift-F1 and clicking on the MIB backdrop. What happened? How to tell if turned on or off? No idea. Wtv.
+    = File SVN backups didn't even phase it. Ok.
+
+321B) MIB faulted again.
+    = Issue: Displaying "cannot save comment" with Email note. No issue of locked dialog. However, no error on start-up, then use a bit, and glaring comment flashed in rolling message. 
+    = Try reboot, to clear. Presume SVN dir/file locking related condition.
+
+321B) Another issue: Get error message when Exit MIB. Cannot save comment data.
+    Answer, had to reboot RC. Seems to have been a SVN lockp directory / file issue.
+    Unless, starting Delphi 7, and Exit on MIB; created the circumstance? Wtv.
+
+322) PATH on RC.
+    Given Default: C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\;C:\Program Files\Borland\BDS\4.0\Bin;C:\Program Files\Borland\Delphi7\Bin;C:\Program Files\Borland\Delphi7\Projects\Bpl\;%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Radix\Tools;C:\Radix\Nets;C:\Program Files\ATI Technologies\ATI Control Panel;C:\Program Files\Borland\CaliberRM SDK 2005 R2\lib
+
+    Shortened Default:
+%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem;C:\Radix\Tools;C:\Radix\Nets;C:\Program Files\ATI Technologies\ATI Control Panel;C:\WINDOWS\Microsoft.NET\Framework\v1.1.4322\
+
+    User Default:
+C:\Documents and Settings\Glen Ritchie\My Documents\Borland Studio Projects\Bpl
+
+    PATH on Odysseus:
+    C:\pvsw\bin;C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;c:\oak\nets;c:\oak\tools
+    C:\WINNT\system32;C:\WINNT;C:\WINNT\System32\Wbem;c:\oak\nets;c:\oak\tools;c:\progra~1\XEmacs\xemacs~1.21\i586-p~1
+
+    pvsw: Pervasive SQL part of Peachtree Accounting.
+
+323) Advanced Subversion:
+    How to get it to fold (merge) text files, together. One, you don't edit same regions. Two, one PC at start of file, the other at end of file.
+    = Commit, the 2nd PC (edits on the end). Edit [or previously - Ok] the file on PC:1. Then, "Update" it & message of merged will appear. Then, Commit it, on PC:1, too. Then, SVN good, and should update on everyone. Or continue in hazy states. Ok.
+
+324) Odysseus - Wide Acer monitor settings:
+    Odysseus is at 1360 x 768, 60 Hz, at 32-bit. Going to change, so higher. New setting at 1600 x 900, at 60 Hz, and 32-bit color. Fonts a bit ``not so stellar." However, far better to have much more resolution, on such a wide screen.
+
+325) Proper saving of FPD Webalizer with Opera.
+    1: Use Opera
+    2: Login to Admin panel, then open in new tab - Webalizer.
+    *: Then, "open in new tab" Nov 2007 screen.
+    *: If you don't do it. Important to "open frame" for proper saving. As above, it is full paned.
+    *: Lastly, save "with Images" to usage_200711.html, and you're done.
+
+326) Making icons with Photo-Paint
+    There is a lot, they don't tell you. However, here is how, I think you can do it? Check in Apr '08.
+    = Make it 32x32 or 16x16. If RGB - ok.
+    = Next, do your edits.
+    = Next, lower the color resolution. Make it 8-bit color Palette. Probably system is best?
+    = Next, save as "very plain" BMP file.
+    = Last, enter Windows in raw form, switch extension from BMP to ICO.
+    Alert - not right? Wtv
+
+327) GR's Big Prime:
+  815915283247897734345611269596115894271999999917
+  815,915,283,247,897,734,345,611,269,596,115,894,271,999,999,917
+  # length = 48 digits.
+
+328) Applying 7-Zip (7zip), 2 entries above.
+  cd "where to pull"
+  write down, where to store archive.
+  using 7z format, presumes stores long filenames, and preserves paths?
+
+  \progra~1\zip7\7-Zip\7z a -t7z -r c:image -mx=0
+  # Says, it is compressing. But wanted store-only. Indication by "0 processor" activity. Compression, does hit CPU for thinking.
+
+329) Make abbreviated bash prompt - of path to /home/.../short:
+  PROMPT_COMMAND='DIR=`pwd|sed -e "s!$HOME!~!"`; if [ ${#DIR} -gt 30 ]; then CurDir=${DIR:0:12}...${DIR:${#DIR}-15}; else CurDir=$DIR; fi'
+  PS1="[\$CurDir] \$ "
+
+  ** See Customizing the Terminal: MBW.
+
+330) Screen Resolutions:
+    Old PCs: 640 x 480; color 256 only!
+    Windows 95: 800 x 600; 8-bit, 16-bit color; LATER ON 32-bit color
+      * Best Frequency: 800x600 60Hz (never ABOVE 80, stay under 75-76 - must do, or burn-out the Monitor.
+    Linux 2000 Systems: strived for 1280 x 1024, or 1024 x 768
+    Windows XP Laptop: 1280 x 800; 32-bit color.
+    R4 Desktop - Dual screens: 1680 x 1050 (2*1680 = 3360) at 96 DPI; 32-bit color.
 
