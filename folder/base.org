@@ -1,0 +1,15 @@
+#+TITLE: Chapter Outline
+#+AUTHOR:Glen Ritchie
+#+SEQ_TODO: TODO(t) NEXT(n) HOLD(h) WAITING(w) SOMEDAY(s) PROJ(p) | CANCELLED(c) DONE(d)
+#+TAGS: ONLINE(o) LIBRARY(l) ACTIVE(a) EMACS(e) META(m)
+#+PRIORITIES: A F F
+#+STARTUP: showall hidestars
+#+OPTIONS: toc:nil
+
+# letters TODO states: cdnpstw
+# letters TAGS used: aelom
+# NO assign 'q' here, used for Ctrl-c, Ctrl-c (or q); quick exit.
+# Bug 'multiplent 1'.
+
+* Pre-Notes                                                            :META:
+** 
